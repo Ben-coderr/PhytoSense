@@ -1,250 +1,257 @@
 "use client";
 
-import { useState, useRef } from "react";
-
-type Plant = {
-  id: number;
-  scientific_name: string;
-  french_name: string;
-  arabic_name: string;
-  family: string;
-  composition: string;
-  composition_tags: string;
-  biological_activity: string;
-  activity_tags: string;
-  region: string;
-  part_used: string;
-  similarity_score?: number;
-};
-
-type Prediction = {
-  predicted_activities: string[];
-  reasoning: string;
-};
+import Image from "next/image";
+import Link from "next/link";
+import { motion } from "framer-motion";
+import { ArrowRight, Leaf, ShieldCheck, Search, Sparkles, BrainCircuit, ScanLine, Sprout, Smartphone } from "lucide-react";
+import { FaApple, FaGooglePlay } from "react-icons/fa";
+import { useLanguage } from "../i18n/LanguageContext";
 
 export default function Home() {
-  const [query, setQuery] = useState("");
-  const [results, setResults] = useState<Plant[]>([]);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
-
-  const [selectedPlant, setSelectedPlant] = useState<Plant | null>(null);
-  const [prediction, setPrediction] = useState<Prediction | null>(null);
-  const [predicting, setPredicting] = useState(false);
-
-  const [uploading, setUploading] = useState(false);
-  const fileInputRef = useRef<HTMLInputElement>(null);
-
-  const searchPlants = async (e?: React.FormEvent) => {
-    if (e) e.preventDefault();
-    if (!query.trim()) return;
-
-    setLoading(true);
-    setError("");
-    setResults([]);
-    
-    try {
-      const res = await fetch(`/api/plants/search?q=${encodeURIComponent(query)}`);
-      if (!res.ok) {
-        if (res.status === 404) throw new Error("No plants found.");
-        throw new Error("Failed to search plants.");
-      }
-      const data = await res.json();
-      setResults(data);
-    } catch (err: any) {
-      setError(err.message);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const predictProperties = async (plantId: number) => {
-    setPredicting(true);
-    setPrediction(null);
-    try {
-      const res = await fetch(`/api/plants/${plantId}/predict`);
-      if (!res.ok) throw new Error("Prediction failed.");
-      const data = await res.json();
-      setPrediction(data);
-    } catch (err: any) {
-      alert(err.message);
-    } finally {
-      setPredicting(false);
-    }
-  };
-
-  const handleFileUpload = async (file: File) => {
-    setUploading(true);
-    setError("");
-    setResults([]);
-    try {
-      const formData = new FormData();
-      formData.append("image", file);
-      
-      const res = await fetch(`/api/plants/identify`, {
-        method: "POST",
-        body: formData,
-      });
-      
-      if (!res.ok) {
-        const errorData = await res.json();
-        throw new Error(errorData.detail || "Failed to identify plant.");
-      }
-      
-      const data = await res.json();
-      setResults(data);
-      setQuery(""); // Clear text query
-    } catch (err: any) {
-      setError(err.message);
-    } finally {
-      setUploading(false);
-    }
-  };
-
-  const onFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files && e.target.files.length > 0) {
-      handleFileUpload(e.target.files[0]);
-    }
-  };
+  const { t, isRtl } = useLanguage();
 
   return (
-    <div className="container">
-      <header style={{ textAlign: "center", marginBottom: "40px" }}>
-        <h1>PhytoSense</h1>
-        <p>Identify medicinal plants and predict therapeutic properties via AI</p>
-      </header>
+    <div className={`landing-wrapper ${isRtl ? 'rtl-layout' : ''}`}>
+      {/* Hero Section */}
+      <section className="hero-premium">
+        <div className="hero-content">
+          <motion.div 
+            className="hero-badge"
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+          >
+            <Sparkles size={14} className="badge-icon" />
+            <span>{t.landing.badge}</span>
+          </motion.div>
+          
+          <motion.h1 
+            className="hero-headline"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.1 }}
+          >
+            {t.landing.heroHeadline1} <br/>
+            <span className="text-gradient">{t.landing.heroHeadline2}</span>
+          </motion.h1>
+          
+          <motion.p 
+            className="hero-subheadline"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
+          >
+            {t.landing.heroSub}
+          </motion.p>
+          
+          <motion.div 
+            className="hero-actions"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.3 }}
+          >
+            <Link href="/dashboard" className="btn-premium">
+              {t.landing.launchBtn} <ArrowRight size={18} style={isRtl ? { transform: 'scaleX(-1)' } : {}} />
+            </Link>
+            <Link href="#mobile-app" className="btn-secondary">
+              {t.landing.getAppBtn} <Smartphone size={18} />
+            </Link>
+          </motion.div>
+        </div>
 
-      <main>
-        {/* Search & Upload Section */}
-        {!selectedPlant && (
-          <>
-            <form className="search-container" onSubmit={searchPlants} style={{ margin: "0 auto 40px" }}>
-              <input
-                type="text"
-                className="input-field"
-                placeholder="Search by scientific, French, or Arabic name..."
-                value={query}
-                onChange={(e) => setQuery(e.target.value)}
-              />
-              <button type="submit" className="btn-primary" disabled={loading}>
-                {loading ? <div className="loader" /> : "Search"}
-              </button>
-            </form>
+        <motion.div 
+          className="hero-visual"
+          initial={{ opacity: 0, scale: 0.95 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.8, delay: 0.2 }}
+        >
+          <div className="visual-glow-backdrop"></div>
+          <Image 
+            src="/hero_imge_v2.png" 
+            alt="AI Plant Analysis" 
+            width={800} 
+            height={800} 
+            className="hero-image-premium"
+            priority
+          />
+        </motion.div>
+      </section>
 
-            <div 
-              className="upload-area glass-panel"
-              onClick={() => fileInputRef.current?.click()}
-            >
-              <input 
-                type="file" 
-                ref={fileInputRef} 
-                style={{ display: 'none' }} 
-                accept="image/*"
-                onChange={onFileChange}
-              />
-              {uploading ? (
-                <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "10px" }}>
-                  <div className="loader" style={{ borderColor: "rgba(16,185,129,0.3)", borderTopColor: "var(--primary)" }} />
-                  <p>Analyzing image with Pl@ntNet...</p>
-                </div>
-              ) : (
-                <>
-                  <h2 style={{ marginBottom: "10px" }}>📷 Identify by Photo</h2>
-                  <p>Click here to upload a photo of a plant to identify it</p>
-                </>
-              )}
+      {/* Features: Bento Grid */}
+      <section className="bento-section">
+        <div className="section-header">
+          <h2>{t.landing.bentoTitle}</h2>
+          <p>{t.landing.bentoSub}</p>
+        </div>
+
+        <div className="bento-grid">
+          {/* Large Card */}
+          <motion.div className="bento-card col-span-2 bento-primary" whileHover={{ y: -5 }}>
+            <div className="bento-content">
+              <BrainCircuit size={40} className="bento-icon" />
+              <h3>{t.landing.bento1Title}</h3>
+              <p>{t.landing.bento1Desc}</p>
             </div>
+            <div className="bento-decoration decoration-1"></div>
+          </motion.div>
 
-            {error && <p style={{ color: "#ef4444", textAlign: "center", marginBottom: "20px" }}>{error}</p>}
-
-            <div className="grid">
-              {results.map((plant) => (
-                <div key={plant.id} className="glass-panel" style={{ cursor: "pointer" }} onClick={() => setSelectedPlant(plant)}>
-                  <h3 style={{ fontSize: "1.2rem", marginBottom: "8px" }}>{plant.scientific_name}</h3>
-                  <p style={{ fontSize: "0.9rem", marginBottom: "12px" }}>
-                    {plant.french_name && <span>FR: {plant.french_name}<br/></span>}
-                    {plant.arabic_name && <span>AR: {plant.arabic_name}</span>}
-                  </p>
-                  <p style={{ fontSize: "0.8rem", color: "var(--primary)" }}>Family: {plant.family}</p>
-                  {plant.similarity_score && (
-                    <p style={{ fontSize: "0.8rem", opacity: 0.7, marginTop: "8px" }}>Match: {plant.similarity_score.toFixed(1)}%</p>
-                  )}
-                </div>
-              ))}
+          {/* Small Card 1 */}
+          <motion.div className="bento-card" whileHover={{ y: -5 }}>
+            <div className="bento-content">
+              <ScanLine size={32} className="bento-icon" />
+              <h3>{t.landing.bento2Title}</h3>
+              <p>{t.landing.bento2Desc}</p>
             </div>
-          </>
-        )}
+          </motion.div>
 
-        {/* Detail View Section */}
-        {selectedPlant && (
-          <div className="glass-panel" style={{ maxWidth: "800px", margin: "0 auto" }}>
-            <button 
-              style={{ background: "none", border: "none", color: "var(--text-secondary)", cursor: "pointer", marginBottom: "20px", fontSize: "1rem" }}
-              onClick={() => { setSelectedPlant(null); setPrediction(null); }}
-            >
-              ← Back to results
-            </button>
-            
-            <h2 style={{ fontSize: "2rem", marginBottom: "8px" }}>{selectedPlant.scientific_name}</h2>
-            <p style={{ marginBottom: "24px", color: "var(--primary)" }}>Family: {selectedPlant.family}</p>
+          {/* Small Card 2 */}
+          <motion.div className="bento-card" whileHover={{ y: -5 }}>
+            <div className="bento-content">
+              <Search size={32} className="bento-icon" />
+              <h3>{t.landing.bento3Title}</h3>
+              <p>{t.landing.bento3Desc}</p>
+            </div>
+          </motion.div>
 
-            <div style={{ display: "flex", flexWrap: "wrap", gap: "20px", marginBottom: "30px" }}>
-              <div style={{ flex: "1 1 300px" }}>
-                <h3 style={{ marginBottom: "8px" }}>Common Names</h3>
-                <p><strong>French:</strong> {selectedPlant.french_name || "N/A"}</p>
-                <p><strong>Arabic:</strong> {selectedPlant.arabic_name || "N/A"}</p>
-                <br/>
-                <h3 style={{ marginBottom: "8px" }}>Origin</h3>
-                <p>{selectedPlant.region || "N/A"}</p>
+          {/* Medium Card */}
+          <motion.div className="bento-card col-span-2 row-span-1 horizontal-card" whileHover={{ y: -5 }}>
+            <div className="bento-content">
+              <ShieldCheck size={32} className="bento-icon" />
+              <div>
+                <h3>{t.landing.bento4Title}</h3>
+                <p>{t.landing.bento4Desc}</p>
               </div>
-              <div style={{ flex: "1 1 300px" }}>
-                <h3 style={{ marginBottom: "8px" }}>Composition Tags</h3>
-                <div>
-                  {selectedPlant.composition_tags ? (
-                    selectedPlant.composition_tags.split(",").map(tag => (
-                      <span key={tag} className="tag">{tag.trim()}</span>
-                    ))
-                  ) : <p>No tags available</p>}
-                </div>
-              </div>
             </div>
+          </motion.div>
+        </div>
+      </section>
 
-            <h3 style={{ marginBottom: "8px" }}>Detailed Composition</h3>
-            <p style={{ marginBottom: "30px", background: "rgba(0,0,0,0.2)", padding: "16px", borderRadius: "8px" }}>
-              {selectedPlant.composition || "No details available."}
-            </p>
+      {/* How it Works: Timeline */}
+      <section className="timeline-section">
+        <div className="section-header">
+          <h2>{t.landing.timelineTitle}</h2>
+          <p>{t.landing.timelineSub}</p>
+        </div>
 
-            <hr style={{ border: "0", height: "1px", background: "var(--border)", margin: "30px 0" }} />
-
-            <div style={{ textAlign: "center" }}>
-              {!prediction && !predicting && (
-                <button className="btn-primary" onClick={() => predictProperties(selectedPlant.id)}>
-                  ✨ Predict Properties via AI
-                </button>
-              )}
-              
-              {predicting && (
-                <div style={{ display: "flex", justifyContent: "center", alignItems: "center", gap: "10px" }}>
-                  <div className="loader" />
-                  <p>AI is analyzing compounds...</p>
-                </div>
-              )}
+        <div className="timeline-container">
+          <div className="timeline-line"></div>
+          
+          <div className="timeline-step">
+            <div className="step-marker">1</div>
+            <div className="step-content">
+              <h3>{t.landing.step1Title}</h3>
+              <p>{t.landing.step1Desc}</p>
             </div>
-
-            {prediction && (
-              <div style={{ marginTop: "30px", background: "rgba(16, 185, 129, 0.1)", border: "1px solid var(--primary)", borderRadius: "12px", padding: "24px" }}>
-                <h3 style={{ color: "var(--primary)", marginBottom: "16px" }}>🤖 AI Prediction Results</h3>
-                <div style={{ marginBottom: "16px" }}>
-                  {prediction.predicted_activities.map(act => (
-                    <span key={act} className="tag" style={{ background: "var(--primary)", color: "#fff" }}>{act}</span>
-                  ))}
-                </div>
-                <p style={{ color: "var(--text-primary)" }}>{prediction.reasoning}</p>
-              </div>
-            )}
           </div>
-        )}
-      </main>
+
+          <div className="timeline-step">
+            <div className="step-marker">2</div>
+            <div className="step-content">
+              <h3>{t.landing.step2Title}</h3>
+              <p>{t.landing.step2Desc}</p>
+            </div>
+          </div>
+
+          <div className="timeline-step">
+            <div className="step-marker">3</div>
+            <div className="step-content">
+              <h3>{t.landing.step3Title}</h3>
+              <p>{t.landing.step3Desc}</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Mobile App Section */}
+      <section id="mobile-app" className="mobile-app-section">
+        <div className="mobile-app-container">
+          <motion.div 
+            className="mobile-content"
+            initial={{ opacity: 0, x: isRtl ? 20 : -20 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+          >
+            <div className="badge-pill">{t.landing.mobileBadge}</div>
+            <h2>{t.landing.mobileTitle}</h2>
+            <p>
+              {t.landing.mobileDesc}
+            </p>
+            <div className="store-buttons">
+              <button className="store-btn">
+                <span className="store-icon">
+                  <FaApple size={24} />
+                </span>
+                <div className="store-text">
+                  <span className="store-sub">{t.landing.downloadOn}</span>
+                  <span className="store-main">App Store</span>
+                </div>
+              </button>
+              <button className="store-btn">
+                <span className="store-icon">
+                  <FaGooglePlay size={20} />
+                </span>
+                <div className="store-text">
+                  <span className="store-sub">{t.landing.getItOn}</span>
+                  <span className="store-main">Google Play</span>
+                </div>
+              </button>
+            </div>
+          </motion.div>
+          
+          <motion.div 
+            className="mobile-visual"
+            initial={{ opacity: 0, scale: 0.95 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+          >
+            <div className="phone-mockup">
+              <div className="phone-screen">
+                <Leaf size={48} className="phone-icon" />
+                <div className="phone-text">PhytoSense Mobile</div>
+                <div className="phone-scan-line"></div>
+              </div>
+            </div>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Call To Action */}
+      <section className="cta-section">
+        <div className="cta-box">
+          <h2>{t.landing.ctaTitle}</h2>
+          <p>{t.landing.ctaDesc}</p>
+          <Link href="/dashboard" className="btn-premium btn-large">
+            {t.landing.startBtn}
+          </Link>
+        </div>
+      </section>
+
+      {/* Footer */}
+      <footer className="footer-premium">
+        <div className="footer-content">
+          <div className="footer-brand">
+            <div className="logo-icon-wrapper" style={{ padding: '6px' }}>
+              <Leaf size={24} strokeWidth={2.5} />
+            </div>
+            <span>PhytoSense</span>
+          </div>
+          <div className="footer-links">
+            <a href="#">About Us</a>
+            <a href="#">Research</a>
+            <a href="#mobile-app">Mobile App</a>
+            <a href="#">API Docs</a>
+            <a href="#">FAQ</a>
+            <a href="#">Privacy Policy</a>
+            <a href="#">Terms of Service</a>
+            <a href="#">Contact</a>
+          </div>
+        </div>
+        <div className="footer-bottom">
+          <p>© {new Date().getFullYear()} {t.landing.footerRights}</p>
+        </div>
+      </footer>
     </div>
   );
 }

@@ -1,5 +1,7 @@
 import type { Metadata } from 'next'
 import './globals.css'
+import NavBar from "../components/NavBar";
+import { LanguageProvider } from "../i18n/LanguageContext";
 
 export const metadata: Metadata = {
   title: 'PhytoSense',
@@ -13,7 +15,12 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body>
+        <LanguageProvider>
+          <NavBar />
+          {children}
+        </LanguageProvider>
+      </body>
     </html>
   )
 }
