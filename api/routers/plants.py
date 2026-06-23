@@ -9,7 +9,7 @@ from ..services import ai_service, plantnet_service
 
 router = APIRouter(prefix="/api/plants", tags=["plants"])
 
-@router.get("/search", response_model=List[schemas.PlantSearchResponse])
+@router.get("/search")
 def search_plants(
     q: str = Query(..., min_length=2, description="Search query for plant name"),
     db: Session = Depends(get_db)
@@ -49,9 +49,13 @@ def search_plants(
     results.sort(key=lambda x: x['similarity_score'], reverse=True)
     
     if not results:
-        raise HTTPException(status_code=404, detail="No matching plants found")
+        return {
+            "found_local": False,
+            "scientific_name": q,
+            "message": "Plant not found in local database. Deep research required."
+        }
         
-    return results
+    return {"found_local": True, "results": results}
 
 @router.get("/{plant_id}", response_model=schemas.PlantResponse)
 def get_plant(plant_id: int, db: Session = Depends(get_db)):
@@ -81,7 +85,10 @@ def predict_plant_properties(plant_id: int, db: Session = Depends(get_db)):
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"AI prediction failed: {str(e)}")
 
-@router.post("/identify", response_model=List[schemas.PlantSearchResponse])
+class ResearchRequest(schemas.BaseModel):
+    scientific_name: str
+
+@router.post("/identify")
 async def identify_plant(image: UploadFile = File(...), db: Session = Depends(get_db)):
     if not image.content_type.startswith("image/"):
         raise HTTPException(status_code=400, detail="File must be an image")
@@ -117,7 +124,28 @@ async def identify_plant(image: UploadFile = File(...), db: Session = Depends(ge
     results.sort(key=lambda x: x['similarity_score'], reverse=True)
     
     if not results:
-        raise HTTPException(status_code=404, detail=f"Identified as {scientific_names[0]} but not found in our local database.")
+        return {
+            "found_local": False, 
+            "scientific_name": scientific_names[0], 
+            "message": "Plant not found in local database. Deep research required."
+        }
         
-    return results
+    return {"found_local": True, "results": results}
+
+@router.post("/research", response_model=schemas.ResearchResponse)
+def research_plant(req: ResearchRequest):
+    try:
+        result = ai_service.research_unknown_plant(req.scientific_name)
+        return schemas.ResearchResponse(
+            scientific_name=result.scientific_name,
+            researched_compounds=result.researched_compounds,
+            similar_local_plants=[schemas.SimilarPlant(
+                name=p.name,
+                shared_compounds=p.shared_compounds,
+                match_reason=p.match_reason
+            ) for p in result.similar_local_plants],
+            predicted_activities=result.predicted_activities
+        )
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"Research failed: {str(e)}")
 

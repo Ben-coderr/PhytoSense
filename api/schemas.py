@@ -29,3 +29,14 @@ class AIPredictionResponse(BaseModel):
     predicted_activities: list[str]
     reasoning: str
 
+class SimilarPlant(BaseModel):
+    name: str
+    shared_compounds: list[str]
+    match_reason: str
+
+class ResearchResponse(BaseModel):
+    scientific_name: str
+    researched_compounds: list[str]
+    similar_local_plants: list[SimilarPlant]
+    predicted_activities: list[str]
+
