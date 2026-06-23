@@ -987,10 +987,11 @@ html[dir="rtl"] .detail-split {
 .lang-select {
   background: rgba(255, 255, 255, 0.9);
   border: 1px solid var(--border);
-  border-radius: 8px;
-  padding: 6px 12px;
+  border-radius: 6px;
+  padding: 4px 8px;
   font-family: inherit;
   font-weight: 500;
+  font-size: 0.85rem;
   color: var(--text-primary);
   outline: none;
   cursor: pointer;
@@ -1014,5 +1015,11 @@ html[dir="rtl"] .detail-split {
   }
   .navbar-title {
     font-size: 1.4rem;
+  }
+  .dashboard-form, .results-search-bar, .photo-actions {
+    flex-direction: column !important;
+  }
+  .dashboard-form input, .results-search-bar button {
+    width: 100%;
   }
 }

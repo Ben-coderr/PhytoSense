@@ -247,7 +247,7 @@ export default function Home() {
                 <div className="search-box-card">
                   <h2><Search size={24} /> {t.dashboard.searchTitle}</h2>
                   <p style={{ marginBottom: "24px", color: "var(--text-secondary)" }}>{t.dashboard.searchDesc}</p>
-                  <form onSubmit={searchPlants} style={{ display: "flex", gap: "12px", width: "100%" }}>
+                  <form className="dashboard-form" onSubmit={searchPlants} style={{ display: "flex", gap: "12px", width: "100%" }}>
                     <input
                       type="text"
                       className="input-field"
@@ -293,7 +293,7 @@ export default function Home() {
                     <>
                       <h2 style={{ fontSize: "1.5rem", marginBottom: "8px", color: "#0f172a" }}>{t.dashboard.identifyTitle}</h2>
                       <p style={{ color: "var(--text-secondary)", marginBottom: "24px" }}>{t.dashboard.identifyDesc}</p>
-                      <div style={{ display: "flex", gap: "16px", width: "100%", justifyContent: "center" }}>
+                      <div className="photo-actions" style={{ display: "flex", gap: "16px", width: "100%", justifyContent: "center" }}>
                         <button 
                           onClick={startCamera}
                           className="btn-primary"
@@ -318,8 +318,8 @@ export default function Home() {
             )}
 
             {(results.length > 0 || aiGeneratedResults.length > 0 || researchingPlant) && (
-              <div style={{ display: "flex", gap: "12px", maxWidth: "600px", margin: "0 auto 40px" }}>
-                <form className="search-container" onSubmit={searchPlants} style={{ flex: 1, margin: 0 }}>
+              <div className="results-search-bar" style={{ display: "flex", gap: "12px", maxWidth: "600px", margin: "0 auto 40px" }}>
+                <form className="dashboard-form" onSubmit={searchPlants} style={{ flex: 1, margin: 0, display: "flex", gap: "12px" }}>
                   <input
                     type="text"
                     className="input-field"
