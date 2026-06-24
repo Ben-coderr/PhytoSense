@@ -32,6 +32,7 @@ type SimilarPlantResult = {
 
 type ResearchResult = {
   scientific_name: string;
+  region: string;
   researched_compounds: string[];
   similar_local_plants: SimilarPlantResult[];
   predicted_activities: string[];
@@ -350,6 +351,7 @@ export default function Home() {
                     </p>
                     <div style={{ marginTop: "auto" }}>
                       <p style={{ fontSize: "0.85rem", color: "var(--primary)", fontWeight: 500 }}>{t.dashboard.family}: {plant.family}</p>
+                      <p style={{ fontSize: "0.85rem", color: "var(--primary)", fontWeight: 500 }}>{t.dashboard.region}: {plant.region || "Unknown"}</p>
                       {plant.similarity_score && (
                         <p style={{ fontSize: "0.8rem", opacity: 0.7, marginTop: "8px" }}>{t.dashboard.match}: {plant.similarity_score.toFixed(1)}%</p>
                       )}
@@ -370,7 +372,8 @@ export default function Home() {
                     <div style={{ display: "inline-flex", alignItems: "center", gap: "6px", background: "var(--primary)", color: "white", padding: "4px 8px", borderRadius: "999px", fontSize: "0.75rem", fontWeight: "bold", marginBottom: "12px" }}>
                       <Sparkles size={12} /> {t.dashboard.aiGenerated}
                     </div>
-                    <h3 style={{ fontSize: "1.3rem", marginBottom: "8px", color: "var(--primary)" }}>{aiResult.scientific_name}</h3>
+                    <h3 style={{ fontSize: "1.3rem", marginBottom: "4px", color: "var(--primary)" }}>{aiResult.scientific_name}</h3>
+                    <p style={{ fontSize: "0.85rem", color: "var(--primary)", fontWeight: 500, marginBottom: "8px" }}>{t.dashboard.region}: {aiResult.region || "Unknown"}</p>
                     <p style={{ fontSize: "0.85rem", opacity: 0.8, marginBottom: "12px" }}>{t.dashboard.aiDesc}</p>
                     <div style={{ display: "flex", gap: "6px", flexWrap: "wrap" }}>
                       {aiResult.predicted_activities.slice(0, 3).map(act => (
@@ -420,12 +423,14 @@ export default function Home() {
               {isRtl ? '→ ' : '← '} {t.dashboard.back}
             </button>
             
-            <div style={{ display: "flex", alignItems: "center", gap: "12px", marginBottom: "16px" }}>
+            <div style={{ display: "flex", alignItems: "center", gap: "12px", marginBottom: "12px" }}>
               <span style={{ background: "linear-gradient(135deg, #10b981 0%, #0284c7 100%)", color: "white", padding: "6px 16px", borderRadius: "999px", fontSize: "0.85rem", fontWeight: "bold", display: "inline-flex", alignItems: "center", gap: "6px" }}>
                 <Sparkles size={14} /> {t.dashboard.aiGenerated}
               </span>
               <h2 style={{ fontSize: "2.2rem", margin: 0 }}>{selectedAIResult.scientific_name}</h2>
             </div>
+            
+            <p style={{ fontSize: "1.1rem", color: "var(--primary)", fontWeight: "600", marginBottom: "16px" }}>{t.dashboard.region}: {selectedAIResult.region || "Unknown"}</p>
             
             <p style={{ marginBottom: "32px", opacity: 0.8, fontSize: "1.05rem" }}>{t.dashboard.aiResearchWarning}</p>
 

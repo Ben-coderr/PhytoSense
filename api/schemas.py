@@ -36,6 +36,7 @@ class SimilarPlant(BaseModel):
 
 class ResearchResponse(BaseModel):
     scientific_name: str
+    region: str
     researched_compounds: list[str]
     similar_local_plants: list[SimilarPlant]
     predicted_activities: list[str]

@@ -48,6 +48,7 @@ class SimilarPlantResult(BaseModel):
 
 class ResearchResult(BaseModel):
     scientific_name: str
+    region: str = Field(description="The geographic region where this plant is commonly found")
     researched_compounds: list[str]
     similar_local_plants: list[SimilarPlantResult]
     predicted_activities: list[str]
