@@ -1,0 +1,10 @@
+{
+  "db_version": "2.0.0",
+  "sha256": "069a30803b0debe7e130273e6f0f23356f584792961de299389528a9b031ba9e",
+  "size_bytes": 622592,
+  "total_plants": 155,
+  "total_names": 406,
+  "fts_indexed_rows": 155,
+  "safety_flags_count": 33,
+  "generated_at": "2026-10-05"
+}
