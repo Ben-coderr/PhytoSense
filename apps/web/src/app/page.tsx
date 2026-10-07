@@ -6,6 +6,7 @@ import { motion } from "framer-motion";
 import { ArrowRight, Leaf, ShieldCheck, Search, Sparkles, BrainCircuit, ScanLine, Sprout, Smartphone } from "lucide-react";
 import { FaApple, FaGooglePlay } from "react-icons/fa";
 import { useLanguage } from "../i18n/LanguageContext";
+import InteractiveAppSimulator from "../components/InteractiveAppSimulator";
 
 export default function Home() {
   const { t, isRtl } = useLanguage();
