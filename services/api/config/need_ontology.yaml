@@ -1,0 +1,119 @@
+# PhytoSense Need-to-Activity Ontology
+# Maps personal health/care needs to biological activities with scientific weights (sum = 1.0)
+
+needs:
+  # --- Skin Care (Dermatology) ---
+  skin.acne:
+    category: "skin"
+    label_en: "Acne & Blemishes"
+    label_fr: "Acné et boutons"
+    label_ar: "حب الشباب والشوائب"
+    route_preference: "topical"
+    activities:
+      antibactérien: 0.35
+      anti-inflammatoire: 0.35
+      antimicrobien: 0.15
+      antioxydant: 0.15
+
+  skin.dry_skin:
+    category: "skin"
+    label_en: "Dry & Flaky Skin"
+    label_fr: "Peau sèche et squameuse"
+    label_ar: "جفاف البشرة والتقشر"
+    route_preference: "topical"
+    activities:
+      antioxydant: 0.40
+      anti-inflammatoire: 0.30
+      cicatrisant: 0.30
+
+  skin.wounds_scars:
+    category: "skin"
+    label_en: "Wounds, Cuts & Scars"
+    label_fr: "Plaies, coupures et cicatrices"
+    label_ar: "الجروح والندبات"
+    route_preference: "topical"
+    activities:
+      cicatrisant: 0.45
+      antibactérien: 0.25
+      anti-inflammatoire: 0.20
+      antioxydant: 0.10
+
+  skin.anti_aging:
+    category: "skin"
+    label_en: "Anti-Aging & Firmness"
+    label_fr: "Anti-âge et fermeté"
+    label_ar: "مكافحة الشيخوخة والنضارة"
+    route_preference: "topical"
+    activities:
+      antioxydant: 0.60
+      anti-inflammatoire: 0.25
+      cicatrisant: 0.15
+
+  skin.fungal:
+    category: "skin"
+    label_en: "Fungal Skin Irritation"
+    label_fr: "Mycoses et irritations fongiques"
+    label_ar: "الفطريات والتهابات الجلد"
+    route_preference: "topical"
+    activities:
+      antifongique: 0.70
+      antimicrobien: 0.20
+      anti-inflammatoire: 0.10
+
+  # --- Pain & Inflammation ---
+  pain.joint_muscle:
+    category: "pain"
+    label_en: "Joint & Muscle Pain"
+    label_fr: "Douleurs articulaires et musculaires"
+    label_ar: "آلام المفاصل والعضلات"
+    route_preference: "topical"
+    activities:
+      anti-inflammatoire: 0.50
+      analgésique: 0.35
+      antispasmodique: 0.15
+
+  pain.headache:
+    category: "pain"
+    label_en: "Headache & Tension"
+    label_fr: "Maux de tête et céphalées"
+    label_ar: "الصداع وآلام الرأس"
+    route_preference: "oral"
+    activities:
+      analgésique: 0.55
+      antispasmodique: 0.25
+      anti-inflammatoire: 0.20
+
+  # --- Digestion & Spasms ---
+  digestion.spasm_bloating:
+    category: "digestion"
+    label_en: "Digestive Spasms & Bloating"
+    label_fr: "Spasmes digestifs et ballonnements"
+    label_ar: "تشنجات الجهاز الهضمي والانتفاخ"
+    route_preference: "oral"
+    activities:
+      antispasmodique: 0.60
+      antimicrobien: 0.20
+      anti-inflammatoire: 0.20
+
+  # --- Metabolic Support ---
+  metabolism.diabetes_support:
+    category: "metabolism"
+    label_en: "Glycemic & Diabetes Support"
+    label_fr: "Soutien glycémique et diabète"
+    label_ar: "دعم توازن السكر في الدم"
+    route_preference: "oral"
+    activities:
+      antidiabétique: 0.65
+      antioxydant: 0.35
+
+  # --- Microbial Defense ---
+  immunity.infections:
+    category: "immunity"
+    label_en: "Infection Defense"
+    label_fr: "Défense contre les infections"
+    label_ar: "مقاومة العدوى الجرثومية"
+    route_preference: "oral"
+    activities:
+      antimicrobien: 0.40
+      antibactérien: 0.35
+      antioxydant: 0.25

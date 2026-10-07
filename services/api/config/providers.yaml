@@ -1,0 +1,82 @@
+# PhytoSense Provider Configuration & Quota Matrix
+
+plant_id:
+  accept:
+    min_top_score: 0.15
+  chain:
+    - name: plantnet
+      priority: 1
+      timeout_s: 12
+      quota:
+        per_day: 450
+        per_minute: 20
+      env_key: PLANTNET_API_KEY
+
+    - name: kindwise
+      priority: 2
+      timeout_s: 10
+      quota:
+        per_day: 3
+      env_key: KINDWISE_API_KEY
+
+    - name: vision_llm
+      priority: 3
+      timeout_s: 20
+      flag_low_reliability: true
+
+llm:
+  accept:
+    valid_json: true
+  chain:
+    - name: gemini
+      priority: 1
+      timeout_s: 25
+      env_key: GEMINI_API_KEY
+      model: "gemini-3.8-flash"
+      quota:
+        per_minute: 15
+        per_day: 1500
+
+    - name: groq
+      priority: 2
+      timeout_s: 15
+      env_key: GROQ_API_KEY
+      base_url: "https://api.groq.com/openai/v1"
+      model: "openai/gpt-oss-120b"
+      quota:
+        per_minute: 25
+        per_day: 900
+
+    - name: cerebras
+      priority: 3
+      timeout_s: 15
+      env_key: CEREBRAS_API_KEY
+      base_url: "https://api.cerebras.ai/v1"
+      model: "llama3.1-70b"
+      quota:
+        per_minute: 30
+        per_day: 1000
+
+    - name: openrouter
+      priority: 4
+      timeout_s: 25
+      env_key: OPENROUTER_API_KEY
+      base_url: "https://openrouter.ai/api/v1"
+      model: "nvidia/nemotron-3.5-lightning:free"
+      quota:
+        per_minute: 18
+        per_day: 45
+
+    - name: mistral
+      priority: 5
+      timeout_s: 20
+      env_key: MISTRAL_API_KEY
+      base_url: "https://api.mistral.ai/v1"
+      model: "mistral-small-latest"
+      quota:
+        per_minute: 20
+        per_day: 500
+
+    - name: rule_based
+      priority: 99
+      timeout_s: 1
