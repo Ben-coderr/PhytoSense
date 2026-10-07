@@ -1,11 +1,18 @@
 {
-  "name": "frontend",
-  "version": "0.1.0",
+  "name": "phytosense-monorepo",
+  "version": "2.0.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
+    "dev": "./dev.sh --all",
+    "dev:all": "./dev.sh --all",
+    "dev:web": "./dev.sh --web",
+    "dev:mobile": "./dev.sh --mobile",
+    "dev:api": "./dev.sh --api",
+    "clean:ports": "./dev.sh --clean",
+    "build:web": "pnpm --filter @phytosense/web build",
+    "test:api": "PYTHONPATH=services/api python3 -m pytest services/api/tests/",
+    "build": "pnpm --filter @phytosense/web build",
+    "start": "pnpm --filter @phytosense/web start",
     "lint": "eslint"
   },
   "dependencies": {
@@ -20,6 +27,7 @@
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "concurrently": "^10.0.5",
     "eslint": "^9",
     "eslint-config-next": "16.2.9",
     "typescript": "^5"
