@@ -1,0 +1,58 @@
+version: '3.8'
+
+services:
+  redis:
+    image: redis:7-alpine
+    container_name: phytosense-redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    restart: unless-stopped
+
+  postgres:
+    image: postgres:16-alpine
+    container_name: phytosense-postgres
+    environment:
+      POSTGRES_USER: phytosense
+      POSTGRES_PASSWORD: phytosense_dev_password
+      POSTGRES_DB: phytosense
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    restart: unless-stopped
+
+  api:
+    build:
+      context: ..
+      dockerfile: services/api/Dockerfile
+    container_name: phytosense-api
+    ports:
+      - "8000:8000"
+    env_file:
+      - ../services/api/.env
+    environment:
+      - REDIS_URL=redis://redis:6379/0
+      - DATABASE_URL=postgresql://phytosense:phytosense_dev_password@postgres:5432/phytosense
+    depends_on:
+      - redis
+      - postgres
+    restart: unless-stopped
+
+  web:
+    build:
+      context: ..
+      dockerfile: apps/web/Dockerfile
+    container_name: phytosense-web
+    ports:
+      - "3000:3000"
+    environment:
+      - NEXT_PUBLIC_API_URL=http://api:8000
+    depends_on:
+      - api
+    restart: unless-stopped
+
+volumes:
+  redis_data:
+  postgres_data:
