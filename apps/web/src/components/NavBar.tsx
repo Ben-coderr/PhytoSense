@@ -45,10 +45,10 @@ export default function NavBar() {
           </select>
 
           <Link href="/" className={`nav-link ${pathname === "/" ? "active" : ""}`} onClick={() => setIsMobileMenuOpen(false)}>
-            {language === 'ar' ? "الرئيسية" : language === 'fr' ? "Accueil" : "Home"}
+            {t.nav.home}
           </Link>
           <Link href="/dashboard" className="btn-primary nav-btn" onClick={() => setIsMobileMenuOpen(false)}>
-            {pathname === "/dashboard" ? <><Leaf size={18} /> {t.nav.dashboard}</> : <><Sparkles size={18} /> {language === 'ar' ? 'تشغيل التطبيق' : language === 'fr' ? 'Lancer App' : 'Launch App'}</>}
+            {pathname === "/dashboard" ? <><Leaf size={18} /> {t.nav.dashboard}</> : <><Sparkles size={18} /> {t.landing.launchBtn}</>}
           </Link>
         </div>
       </div>
