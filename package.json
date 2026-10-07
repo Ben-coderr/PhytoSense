@@ -9,27 +9,16 @@
     "dev:mobile": "./dev.sh --mobile",
     "dev:api": "./dev.sh --api",
     "clean:ports": "./dev.sh --clean",
-    "build:web": "pnpm --filter @phytosense/web build",
-    "test:api": "PYTHONPATH=services/api python3 -m pytest services/api/tests/",
     "build": "pnpm --filter @phytosense/web build",
+    "build:web": "pnpm --filter @phytosense/web build",
     "start": "pnpm --filter @phytosense/web start",
-    "lint": "eslint"
-  },
-  "dependencies": {
-    "framer-motion": "^12.40.0",
-    "lucide-react": "^1.21.0",
-    "next": "16.2.9",
-    "react": "19.2.4",
-    "react-dom": "19.2.4",
-    "react-icons": "^5.6.0"
+    "lint": "pnpm --filter @phytosense/web lint",
+    "test:api": "PYTHONPATH=services/api python3 -m pytest services/api/tests/",
+    "test:ai": "python3 scripts/test_ai.py",
+    "verify": "python3 scripts/verify_system.py"
   },
   "devDependencies": {
-    "@types/node": "^20",
-    "@types/react": "^19",
-    "@types/react-dom": "^19",
     "concurrently": "^10.0.5",
-    "eslint": "^9",
-    "eslint-config-next": "16.2.9",
     "typescript": "^5"
   }
 }

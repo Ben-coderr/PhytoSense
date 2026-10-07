@@ -238,14 +238,14 @@ export default function Home() {
             <span>PhytoSense</span>
           </div>
           <div className="footer-links">
-            <a href="#">About Us</a>
-            <a href="#">Research</a>
-            <a href="#mobile-app">Mobile App</a>
-            <a href="#">API Docs</a>
-            <a href="#">FAQ</a>
-            <a href="#">Privacy Policy</a>
-            <a href="#">Terms of Service</a>
-            <a href="#">Contact</a>
+            <a href="#">{(t.landing as any).footerAbout || 'About Us'}</a>
+            <a href="#">{(t.landing as any).footerResearch || 'Research'}</a>
+            <a href="#mobile-app">{(t.landing as any).footerMobileApp || 'Mobile App'}</a>
+            <a href="#">{(t.landing as any).footerApiDocs || 'API Docs'}</a>
+            <a href="#">{(t.landing as any).footerFaq || 'FAQ'}</a>
+            <a href="#">{(t.landing as any).footerPrivacy || 'Privacy Policy'}</a>
+            <a href="#">{(t.landing as any).footerTerms || 'Terms of Service'}</a>
+            <a href="#">{(t.landing as any).footerContact || 'Contact'}</a>
           </div>
         </div>
         <div className="footer-bottom">
