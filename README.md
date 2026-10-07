@@ -42,7 +42,7 @@ PhytoSense v2 is deployed across web, mobile, and backend microservices:
 | Platform | Distribution Channel | Direct Access / Installation | Status |
 |---|---|---|---|
 | **📱 Mobile (Android / iOS)** | **Expo Go Preview** | Scan QR code at `exp://localhost:8081` via [Expo Go](https://expo.dev/go) | 🟢 Ready (SDK 57) |
-| **🤖 Android Standalone** | **EAS Android APK / AAB** | Run `npx eas build -p android --profile preview` in [apps/mobile](apps/mobile) | 🟢 Production Ready |
+| **🤖 Android Standalone APK** | **Official GitHub Release** | [⬇️ Download `PhytoSense-v2.0.0.apk`](https://github.com/Ben-coderr/PhytoSense/releases/download/v2.0.0/PhytoSense-v2.0.0.apk) • [Release Notes](https://github.com/Ben-coderr/PhytoSense/releases/tag/v2.0.0) | 🟢 Production APK (137 MB) |
 | **💻 Web Analytics Portal** | **Next.js 16 Web App** | Access local portal at [`http://localhost:3001/dashboard`](http://localhost:3001/dashboard) | 🟢 Live (Turbopack) |
 | **⚡ Backend API Gateway** | **FastAPI Swagger / ReDoc** | Interactive documentation at [`http://localhost:8000/docs`](http://localhost:8000/docs) | 🟢 Zero-Downtime |
 | **🎓 Academic Slide Deck** | **Reveal Interactive Deck** | Open [`docs/PFE_PRESENTATION_SLIDES.html`](docs/PFE_PRESENTATION_SLIDES.html) in any browser | 🟢 10 Slides + Notes |
