@@ -233,9 +233,9 @@ flowchart LR
     
     F --> G{"Species in Local<br/>Algerian Database?"}
     
-    G -->|Yes (Match >= 60%)| H["Load Verified Phytochemical<br/>& Ethnobotanical Dossier"]
-    G -->|No (Exotic / Wild)| I["Trigger Autonomous Deep Research<br/>(Metabolomic Cross-Referencing)"]
-    
+    G -->|"Yes (Match >= 60%)"| H["Load Verified Phytochemical<br/>& Ethnobotanical Dossier"]
+    G -->|"No (Exotic / Wild)"| I["Trigger Autonomous Deep Research<br/>(Metabolomic Cross-Referencing)"]
+
     H --> J["Structured Output & Action Plan"]
     I --> J
 ```

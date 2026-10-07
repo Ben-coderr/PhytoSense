@@ -53,8 +53,8 @@ export default function Home() {
             <Link href="/dashboard" className="btn-premium">
               {t.landing.launchBtn} <ArrowRight size={18} style={isRtl ? { transform: 'scaleX(-1)' } : {}} />
             </Link>
-            <Link href="#mobile-app" className="btn-secondary">
-              {t.landing.getAppBtn} <Smartphone size={18} />
+            <Link href="/demo" className="btn-secondary">
+              📱 {isRtl ? "تجربة التطبيق (iPhone)" : "Tester la Démo iPhone"}
             </Link>
           </motion.div>
         </div>
@@ -177,25 +177,18 @@ export default function Home() {
             <p>
               {t.landing.mobileDesc}
             </p>
-            <div className="store-buttons">
-              <button className="store-btn">
-                <span className="store-icon">
-                  <FaApple size={24} />
-                </span>
-                <div className="store-text">
-                  <span className="store-sub">{t.landing.downloadOn}</span>
-                  <span className="store-main">App Store</span>
-                </div>
-              </button>
-              <button className="store-btn">
-                <span className="store-icon">
-                  <FaGooglePlay size={20} />
-                </span>
-                <div className="store-text">
-                  <span className="store-sub">{t.landing.getItOn}</span>
-                  <span className="store-main">Google Play</span>
-                </div>
-              </button>
+            <div className="store-buttons" style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+              <Link href="/demo" className="btn-premium" style={{ width: 'fit-content' }}>
+                📱 {isRtl ? "فتح التجربة التفاعلية الكاملة (iPhone & Web)" : "Ouvrir la Démo Complète (iPhone & Web)"}
+              </Link>
+              <a 
+                href="https://github.com/Ben-coderr/PhytoSense/releases/download/v2.0.0/PhytoSense-v2.0.0.apk" 
+                className="btn-secondary"
+                style={{ width: 'fit-content' }}
+                download
+              >
+                ⬇️ {isRtl ? "تحميل تطبيق أندرويد المستقل (APK v2.0.0)" : "Télécharger l'APK Standalone (v2.0.0)"}
+              </a>
             </div>
           </motion.div>
           
@@ -206,13 +199,7 @@ export default function Home() {
             viewport={{ once: true }}
             transition={{ duration: 0.8, delay: 0.2 }}
           >
-            <div className="phone-mockup">
-              <div className="phone-screen">
-                <Leaf size={48} className="phone-icon" />
-                <div className="phone-text">PhytoSense Mobile</div>
-                <div className="phone-scan-line"></div>
-              </div>
-            </div>
+            <InteractiveAppSimulator compact={true} />
           </motion.div>
         </div>
       </section>

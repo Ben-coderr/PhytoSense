@@ -47,6 +47,9 @@ export default function NavBar() {
           <Link href="/" className={`nav-link ${pathname === "/" ? "active" : ""}`} onClick={() => setIsMobileMenuOpen(false)}>
             {t.nav.home}
           </Link>
+          <Link href="/demo" className={`nav-link ${pathname === "/demo" ? "active" : ""}`} onClick={() => setIsMobileMenuOpen(false)}>
+            📱 {language === "ar" ? "تجربة التطبيق (iPhone)" : language === "fr" ? "Démo Mobile (iPhone)" : "Live App Demo"}
+          </Link>
           <Link href="/dashboard" className="btn-primary nav-btn" onClick={() => setIsMobileMenuOpen(false)}>
             {pathname === "/dashboard" ? <><Leaf size={18} /> {t.nav.dashboard}</> : <><Sparkles size={18} /> {t.landing.launchBtn}</>}
           </Link>
