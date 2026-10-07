@@ -1,0 +1,219 @@
+# FAO-ECOCROP-inspired environmental ranges and cultivation parameters
+# abs = absolute survival limits, opt = optimal growth limits
+# Temps in °C, Rain in mm/year, pH in standard units
+
+default_mediterranean:
+  temp:
+    abs_min: 0.0
+    opt_min: 14.0
+    opt_max: 28.0
+    abs_max: 40.0
+  rain:
+    abs_min: 250.0
+    opt_min: 450.0
+    opt_max: 900.0
+    abs_max: 1500.0
+  ph:
+    abs_min: 5.5
+    opt_min: 6.5
+    opt_max: 8.0
+    abs_max: 8.5
+  kc_mid: 0.70
+  gdd_base: 10.0
+  gdd_to_harvest: 1200.0
+  sowing_months: [3, 4, 9, 10]
+  harvest_months: [5, 6, 7]
+  harvest_advice: "Récolter par temps sec et ensoleillé le matin après l'évaporation de la rosée pour préserver les huiles essentielles."
+
+crops:
+  thymus_vulgaris:
+    names: ["Thymus vulgaris", "Thymus", "Thym", "زعتر"]
+    temp:
+      abs_min: -8.0
+      opt_min: 12.0
+      opt_max: 28.0
+      abs_max: 42.0
+    rain:
+      abs_min: 200.0
+      opt_min: 350.0
+      opt_max: 700.0
+      abs_max: 1200.0
+    ph:
+      abs_min: 6.0
+      opt_min: 7.0
+      opt_max: 8.5
+      abs_max: 9.0
+    kc_mid: 0.60
+    gdd_base: 10.0
+    gdd_to_harvest: 950.0
+    sowing_months: [3, 4, 9]
+    harvest_months: [4, 5, 6]
+    harvest_advice: "Cueillir les sommités fleuries au début de l'anthèse en période chaude et sèche."
+
+  rosmarinus_officinalis:
+    names: ["Rosmarinus officinalis", "Salvia rosmarinus", "Romarin", "إكليل الجبل"]
+    temp:
+      abs_min: -10.0
+      opt_min: 14.0
+      opt_max: 30.0
+      abs_max: 44.0
+    rain:
+      abs_min: 250.0
+      opt_min: 400.0
+      opt_max: 800.0
+      abs_max: 1300.0
+    ph:
+      abs_min: 6.0
+      opt_min: 6.8
+      opt_max: 8.2
+      abs_max: 8.8
+    kc_mid: 0.65
+    gdd_base: 10.0
+    gdd_to_harvest: 1100.0
+    sowing_months: [3, 4, 10]
+    harvest_months: [4, 5, 6, 7, 8]
+    harvest_advice: "Récolter les rameaux feuillés de l'année avant la floraison complète."
+
+  lavandula_angustifolia:
+    names: ["Lavandula angustifolia", "Lavandula stoechas", "Lavande", "خزامى"]
+    temp:
+      abs_min: -12.0
+      opt_min: 15.0
+      opt_max: 28.0
+      abs_max: 38.0
+    rain:
+      abs_min: 300.0
+      opt_min: 500.0
+      opt_max: 850.0
+      abs_max: 1400.0
+    ph:
+      abs_min: 6.5
+      opt_min: 7.0
+      opt_max: 8.3
+      abs_max: 8.8
+    kc_mid: 0.65
+    gdd_base: 10.0
+    gdd_to_harvest: 1300.0
+    sowing_months: [3, 4]
+    harvest_months: [6, 7]
+    harvest_advice: "Couper les épis floraux lorsque les 2/3 des fleurs sont épanouies."
+
+  artemisia_herba_alba:
+    names: ["Artemisia herba-alba", "Armoise blanche", "Chih", "شيح"]
+    temp:
+      abs_min: -6.0
+      opt_min: 14.0
+      opt_max: 34.0
+      abs_max: 46.0
+    rain:
+      abs_min: 100.0
+      opt_min: 200.0
+      opt_max: 450.0
+      abs_max: 700.0
+    ph:
+      abs_min: 6.8
+      opt_min: 7.5
+      opt_max: 8.8
+      abs_max: 9.2
+    kc_mid: 0.45
+    gdd_base: 8.0
+    gdd_to_harvest: 1000.0
+    sowing_months: [10, 11]
+    harvest_months: [9, 10, 11]
+    harvest_advice: "Espèce steppique très xérophyte. Récolter les parties aériennes à l'automne lors de la floraison."
+
+  nigella_sativa:
+    names: ["Nigella sativa", "Nigelle", "Habba Sawda", "حبة البركة", "السانوج"]
+    temp:
+      abs_min: 2.0
+      opt_min: 16.0
+      opt_max: 26.0
+      abs_max: 36.0
+    rain:
+      abs_min: 300.0
+      opt_min: 400.0
+      opt_max: 700.0
+      abs_max: 1100.0
+    ph:
+      abs_min: 6.0
+      opt_min: 6.5
+      opt_max: 7.8
+      abs_max: 8.4
+    kc_mid: 0.75
+    gdd_base: 8.0
+    gdd_to_harvest: 1450.0
+    sowing_months: [2, 3, 10, 11]
+    harvest_months: [5, 6]
+    harvest_advice: "Moissonner les capsules dès qu'elles brunissent et avant déhiscence complète pour ne pas perdre les graines."
+
+  matricaria_chamomilla:
+    names: ["Matricaria chamomilla", "Matricaria recutita", "Camomille", "بابونج"]
+    temp:
+      abs_min: -4.0
+      opt_min: 15.0
+      opt_max: 24.0
+      abs_max: 35.0
+    rain:
+      abs_min: 350.0
+      opt_min: 500.0
+      opt_max: 850.0
+      abs_max: 1300.0
+    ph:
+      abs_min: 5.8
+      opt_min: 6.8
+      opt_max: 8.0
+      abs_max: 8.5
+    kc_mid: 0.80
+    gdd_base: 7.0
+    gdd_to_harvest: 900.0
+    sowing_months: [3, 4, 9, 10]
+    harvest_months: [4, 5, 6]
+    harvest_advice: "Cueillir les capitules lorsque les ligules blanches sont horizontales, à midi sous fort ensoleillement."
+
+  mentha_piperita:
+    names: ["Mentha piperita", "Mentha spicata", "Menthe", "نعناع"]
+    temp:
+      abs_min: -5.0
+      opt_min: 16.0
+      opt_max: 26.0
+      abs_max: 36.0
+    rain:
+      abs_min: 500.0
+      opt_min: 700.0
+      opt_max: 1200.0
+      abs_max: 1800.0
+    ph:
+      abs_min: 5.5
+      opt_min: 6.2
+      opt_max: 7.5
+      abs_max: 8.0
+    kc_mid: 1.05
+    gdd_base: 8.0
+    gdd_to_harvest: 850.0
+    sowing_months: [3, 4, 10]
+    harvest_months: [5, 6, 7, 8, 9]
+    harvest_advice: "Exige des arrosages réguliers et un sol frais. Couper les tiges avant floraison pour un arôme optimal."
+
+  punica_granatum:
+    names: ["Punica granatum", "Grenadier", "رمان"]
+    temp:
+      abs_min: -10.0
+      opt_min: 18.0
+      opt_max: 35.0
+      abs_max: 45.0
+    rain:
+      abs_min: 250.0
+      opt_min: 400.0
+      opt_max: 800.0
+      abs_max: 1200.0
+    ph:
+      abs_min: 6.0
+      opt_min: 6.5
+      opt_max: 8.2
+      abs_max: 8.7
+    kc_mid: 0.70
+    gdd_base: 10.0
+    gdd_to_harvest: 2200.0
+    sowing_months: [2, 3]
+    harvest_months: [9, 10, 11]
+    harvest_advice: "Très résistant à la sécheresse et tolérant aux sols calcaires. Récolter les écorces et fruits à maturité."
