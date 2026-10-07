@@ -6,169 +6,153 @@ import {
   Leaf,
   Camera,
   Search,
+  Sparkles,
+  Sprout,
+  ArrowRight,
+  ShieldCheck,
+  Layers,
+  Zap,
+  Globe,
+  User,
+  X,
   Droplets,
   HeartPulse,
+  AlertTriangle,
+  Compass,
   BookOpen,
-  Sparkles,
-  ChevronRight,
-  X,
+  CheckCircle2,
   Upload,
   RefreshCw,
-  CheckCircle2,
-  AlertTriangle,
-  MapPin,
-  Thermometer,
-  Sun,
-  ShieldCheck,
-  Compass,
-  ArrowRight,
-  Info,
-  Maximize2,
-  Smartphone,
-  ExternalLink,
+  ChevronRight,
   Sliders,
   Check,
-  Globe,
 } from "lucide-react";
+import styles from "./InteractiveAppSimulator.module.css";
 
-// Specimen Data for Local Demo & Interactive Exploration
-const SPECIMENS = [
+// 🌿 Curated Endemic Flora Data matching mobile Expo database
+const FLORA_DATABASE = [
   {
     id: 1,
-    scientific: "Thymus vulgaris L.",
-    arabic: "الزعتر البري (Zaatar)",
-    french: "Thym Commun",
-    family: "Lamiaceae",
-    category: "respiratory",
-    grade: "Grade A",
-    image: "/specimens/thyme.jpg",
-    bioactive: "Thymol (45-55%), Carvacrol (5-10%), Acide rosmarinique",
-    indication: "Antiseptique bronchique, toux grasse, désinfection des voies respiratoires",
-    preparation: "Infusion: 2g de sommités fleuries séchées dans 200ml d'eau frémissante (90°C) pendant 10 minutes à couvert.",
-    dosage: "2 à 3 tasses par jour après les repas.",
-    contraindications: "Déconseillé aux personnes souffrant d'insuffisance hépatique sévère. Prudence chez la femme enceinte.",
-    fao: {
-      soilPh: "6.0 - 8.2",
-      rainfall: "300 - 650 mm/an",
-      tempRange: "5°C - 35°C",
-      kc: 0.75,
-    },
-    ethno: "Traditionnellement cueilli dans les monts de l'Atlas tellien pour traiter les affections hivernales et la dyspepsie.",
-  },
-  {
-    id: 2,
-    scientific: "Rosmarinus officinalis L.",
-    arabic: "إكليل الجبل (Iklil Al-Jabal)",
-    french: "Romarin Officinal",
-    family: "Lamiaceae",
-    category: "digestion",
-    grade: "Grade A",
-    image: "/specimens/rosemary.jpg",
-    bioactive: "1,8-Cinéole, Carnosol, Acide carnosique, Camphre",
-    indication: "Insuffisance biliaire, fatigue cérébrale, microcirculation, antioxydant majeur",
-    preparation: "Décoction légère: Faire bouillir 3g de feuilles pendant 3 minutes, puis laisser infuser 10 minutes.",
-    dosage: "1 tasse le matin et 1 tasse à midi avant les repas.",
-    contraindications: "Éviter le soir (effet stimulant). Contre-indiqué en cas d'obstruction des voies biliaires.",
-    fao: {
-      soilPh: "6.5 - 8.5",
-      rainfall: "250 - 600 mm/an",
-      tempRange: "8°C - 38°C",
-      kc: 0.70,
-    },
-    ethno: "Consommé en Algérie en synergie avec l'huile d'olive pour soulager les courbatures et stimuler la mémoire.",
-  },
-  {
-    id: 3,
     scientific: "Nigella sativa L.",
     arabic: "السانوج • حبة البركة (Sanouj)",
     french: "Cumin Noir / Nigelle",
     family: "Ranunculaceae",
-    category: "immunity",
     grade: "Grade A",
+    category: "immunity",
     image: "/specimens/nigella.jpg",
-    bioactive: "Thymoquinone (30-48%), Nigellone, Acide linoléique (56%)",
-    indication: "Stimulation immunitaire, asthme allergique, régulation glycémique",
-    preparation: "Graines broyées fraîches mélangées à du miel pur de montagne ou huile pressée à froid.",
-    dosage: "1 cuillère à café rase de graines moulues par jour le matin à jeun.",
-    contraindications: "Usage culinaire sécurisé. Éviter les doses massives chez la femme enceinte (effet emménagogue).",
-    fao: {
-      soilPh: "6.0 - 7.8",
-      rainfall: "350 - 700 mm/an",
-      tempRange: "10°C - 32°C",
-      kc: 0.85,
-    },
-    ethno: "Remède panacée emblématique du Maghreb, cité pour ses vertus respiratoires et anti-inflammatoires globales.",
+    bioactive: "Thymoquinone (30-48%), Nigellone, Acide linoléique",
+    efficacy: "Bronchodilator & Immune Defense",
+    indication: "Asthme allergique, modulation immunitaire, régulation glycémique",
+    preparation: "1 cuillère à café de graines fraîches broyées dans du miel pur de montagne.",
+    dosage: "1 prise par jour le matin à jeun.",
+    contraindications: "Usage culinaire sécurisé. Éviter les fortes doses chez la femme enceinte.",
+    fao: { soilPh: "6.0 - 7.8", rainfall: "350 - 700 mm/an", tempRange: "10°C - 32°C", kc: 0.85 },
   },
   {
-    id: 4,
+    id: 2,
     scientific: "Artemisia herba-alba Asso",
     arabic: "الشيح الأبيض (Chih)",
     french: "Armoise Blanche",
     family: "Asteraceae",
-    category: "digestion",
     grade: "Grade A",
+    category: "digestion",
     image: "/specimens/chih.jpg",
     bioactive: "Santonine, Thujone, Camphre, Chrysanthénone",
-    indication: "Antispasmodique gastro-intestinal, vermifuge, adjuvant hypoglycémiant",
-    preparation: "Infusion courte: 1g de sommités fleuries séchées dans 250ml d'eau chaude (8 minutes max).",
-    dosage: "1 tasse par jour, cures limitées à 7 jours consécutifs maximum.",
-    contraindications: "Neurotoxique à forte dose (présence de thujone). Strictement interdit chez la femme enceinte.",
-    fao: {
-      soilPh: "7.0 - 8.8",
-      rainfall: "100 - 350 mm/an (Hauts-Plateaux steppiques)",
-      tempRange: "-2°C - 42°C",
-      kc: 0.50,
-    },
-    ethno: "Plante reine de la steppe algérienne (Djelfa, Naâma, Biskra), régulatrice des troubles gastriques traditionnels.",
+    efficacy: "Hypoglycemic & Visceral Spasmolytic",
+    indication: "Spasmes gastro-intestinaux, vermifuge, adjuvant hypoglycémiant",
+    preparation: "Infusion courte: 1g de sommités fleuries séchées dans 250ml d'eau frémissante (8 min max).",
+    dosage: "1 tasse par jour, cures limitées à 7 jours consécutifs.",
+    contraindications: "Neurotoxique à forte dose (présence de thujone). Interdit chez la femme enceinte.",
+    fao: { soilPh: "7.0 - 8.8", rainfall: "100 - 350 mm/an", tempRange: "-2°C - 42°C", kc: 0.50 },
+  },
+  {
+    id: 3,
+    scientific: "Rosmarinus officinalis L.",
+    arabic: "إكليل الجبل (Iklil Al-Jabal)",
+    french: "Romarin Officinal",
+    family: "Lamiaceae",
+    grade: "Grade A",
+    category: "memory",
+    image: "/specimens/rosemary.jpg",
+    bioactive: "1,8-Cinéole, Carnosol, Acide carnosique",
+    efficacy: "Microcirculation & Cellular Defense",
+    indication: "Insuffisance biliaire, microcirculation cérébrale, antioxydant majeur",
+    preparation: "Décoction légère: 3g de feuilles bouillies 3 min, infuser 10 min.",
+    dosage: "1 tasse le matin et 1 tasse à midi avant les repas.",
+    contraindications: "Éviter le soir (effet stimulant). Déconseillé en cas d'obstruction biliaire.",
+    fao: { soilPh: "6.5 - 8.5", rainfall: "250 - 600 mm/an", tempRange: "8°C - 38°C", kc: 0.70 },
+  },
+  {
+    id: 4,
+    scientific: "Thymus vulgaris L.",
+    arabic: "الزعتر الجبلي (Zaatar)",
+    french: "Thym Commun",
+    family: "Lamiaceae",
+    grade: "Grade A",
+    category: "respiratory",
+    image: "/specimens/thyme.jpg",
+    bioactive: "Thymol (45-55%), Carvacrol, Acide rosmarinique",
+    efficacy: "Antimicrobial & Biofilm Disruption",
+    indication: "Antiseptique bronchique, toux productive, affections ORL",
+    preparation: "Infusion: 2g de sommités fleuries dans 200ml d'eau à 90°C pendant 10 min à couvert.",
+    dosage: "2 à 3 tasses par jour après les repas.",
+    contraindications: "Prudence en cas d'insuffisance hépatique sévère. Déconseillé chez la femme enceinte.",
+    fao: { soilPh: "6.0 - 8.2", rainfall: "300 - 650 mm/an", tempRange: "5°C - 35°C", kc: 0.75 },
   },
 ];
 
-const WILAYAS = [
-  { name: "Alger (Littoral)", et0Base: 3.4, rain: 600, climate: "Subhumide côtier" },
-  { name: "Oran (Tell Ouest)", et0Base: 3.6, rain: 420, climate: "Semi-aride maritime" },
-  { name: "Constantine (Est)", et0Base: 3.2, rain: 550, climate: "Continental subhumide" },
-  { name: "Batna (Aurès)", et0Base: 3.8, rain: 350, climate: "Semi-aride d'altitude" },
-  { name: "Biskra (Ziban)", et0Base: 5.2, rain: 150, climate: "Aride présaharien" },
-  { name: "Tlemcen (Plateaux)", et0Base: 3.5, rain: 480, climate: "Méditerranéen d'altitude" },
-  { name: "Ghardaïa (Mzab)", et0Base: 5.8, rain: 90, climate: "Saharien hyper-aride" },
+const QUICK_FILTERS = [
+  { label: "Thyme (Zaatar)", query: "Thymus" },
+  { label: "Lavender", query: "Lavandula" },
+  { label: "Chih (Wormwood)", query: "Artemisia" },
+  { label: "Rosemary (Iklil)", query: "Rosmarinus" },
+  { label: "Black Seed", query: "Nigella" },
 ];
 
-const AILMENTS = [
+const REGIONS_DATA = [
+  { name: "Algiers", title: "Algiers (Coastal Tell)", et0: "3.2 mm/d", irrigation: "8.8 L/m²", soilPh: "7.4 pH", climate: "Sub-humid Mediterranean", et0Base: 3.2 },
+  { name: "Oran", title: "Oran (Western Coast)", et0: "3.6 mm/d", irrigation: "10.2 L/m²", soilPh: "7.6 pH", climate: "Semi-arid Coastal", et0Base: 3.6 },
+  { name: "Constantine", title: "Constantine (High Plain)", et0: "3.1 mm/d", irrigation: "8.5 L/m²", soilPh: "7.2 pH", climate: "Continental Mediterranean", et0Base: 3.1 },
+  { name: "Batna", title: "Batna (Aurès)", et0: "3.4 mm/d", irrigation: "9.4 L/m²", soilPh: "7.5 pH", climate: "Semi-arid Highland", et0Base: 3.4 },
+  { name: "Biskra", title: "Biskra (Saharan Gateway)", et0: "5.1 mm/d", irrigation: "14.2 L/m²", soilPh: "7.8 pH", climate: "Arid Oasis Ecosystem", et0Base: 5.1 },
+];
+
+const AILMENTS_PRESETS = [
   {
     id: "respiratory",
-    labelEn: "Cough & Respiration",
+    label: "Cough & Respiration",
     labelFr: "Toux & Voies Respiratoires",
     labelAr: "السعال والتنفس",
     icon: "🫁",
-    plantId: 1,
-    advice: "Infusion de Thymus vulgaris + cuillère de miel de montagne matin et soir.",
+    plantId: 4,
+    protocol: "Infusion de Thymus vulgaris avec miel pur d'eucalyptus, 3 fois par jour après les repas.",
   },
   {
     id: "digestion",
-    labelEn: "Bloating & Spasms",
-    labelFr: "Ballonnements & Spasmes",
-    labelAr: "الانتفاخ والمغص الهضمي",
+    label: "Bloating & Spasms",
+    labelFr: "Spasmes & Ballonnements",
+    labelAr: "المغص والانتفاخ",
     icon: "🍵",
-    plantId: 4,
-    advice: "Infusion légère d'Artemisia herba-alba après le repas principal (cure de 5 jours).",
+    plantId: 2,
+    protocol: "Infusion d'Artemisia herba-alba (Chih) après le repas principal, cure de 5 à 7 jours.",
   },
   {
     id: "immunity",
-    labelEn: "Immunity Boost",
-    labelFr: "Défense Immunitaire",
+    label: "Immune System Defense",
+    labelFr: "Renforcement Immunitaire",
     labelAr: "المناعة العامة والوقاية",
     icon: "🛡️",
-    plantId: 3,
-    advice: "Graines de Nigella sativa finement broyées avec miel tiède le matin à jeun.",
+    plantId: 1,
+    protocol: "Graines de Nigella sativa finement broyées avec miel tiède le matin à jeun.",
   },
   {
     id: "memory",
-    labelEn: "Memory & Focus",
-    labelFr: "Concentration & Fatigue",
-    labelAr: "الذاكرة والتركيز الذهني",
+    label: "Memory & Circulation",
+    labelFr: "Mémoire & Microcirculation",
+    labelAr: "الذاكرة والدورة الدموية",
     icon: "🧠",
-    plantId: 2,
-    advice: "Infusion matinale de Rosmarinus officinalis pour tonifier le tonus cérébral.",
+    plantId: 3,
+    protocol: "Infusion matinale de Rosmarinus officinalis (Romarin) pour tonifier la circulation cérébrale.",
   },
 ];
 
@@ -177,101 +161,84 @@ interface SimulatorProps {
 }
 
 export default function InteractiveAppSimulator({ compact = false }: SimulatorProps) {
-  // Simulator State
-  const [activeTab, setActiveTab] = useState<"catalog" | "scanner" | "garden" | "remedies" | "info">("catalog");
-  const [selectedPlant, setSelectedPlant] = useState<(typeof SPECIMENS)[0] | null>(null);
+  // Navigation: matches Expo (tabs): index | scan | search | recommend | garden
+  const [activeTab, setActiveTab] = useState<"home" | "scan" | "search" | "recommend" | "garden">("home");
+  const [selectedPlant, setSelectedPlant] = useState<(typeof FLORA_DATABASE)[0] | null>(null);
   const [searchQuery, setSearchQuery] = useState("");
-  const [selectedCategory, setSelectedCategory] = useState("all");
-  const [simLang, setSimLang] = useState<"fr" | "ar" | "en">("fr");
+  const [simLang, setSimLang] = useState<"en" | "fr" | "ar">("en");
   const [currentTime, setCurrentTime] = useState("09:41");
+  const [selectedRegionIdx, setSelectedRegionIdx] = useState(0);
 
   // Scanner State
-  const [scannedSpecimen, setScannedSpecimen] = useState<(typeof SPECIMENS)[0]>(SPECIMENS[0]);
+  const [selectedSpecimen, setSelectedSpecimen] = useState(FLORA_DATABASE[3]); // Thymus
   const [isScanning, setIsScanning] = useState(false);
-  const [scanResult, setScanResult] = useState<(typeof SPECIMENS)[0] | null>(SPECIMENS[0]);
-  const [selectedOrgan, setSelectedOrgan] = useState("Feuille");
-  const [customImage, setCustomImage] = useState<string | null>(null);
-  const fileInputRef = useRef<HTMLInputElement>(null);
+  const [scanResult, setScanResult] = useState<(typeof FLORA_DATABASE)[0] | null>(FLORA_DATABASE[3]);
+  const [selectedOrgan, setSelectedOrgan] = useState("Leaf");
+  const [customPhoto, setCustomPhoto] = useState<string | null>(null);
+  const filePickerRef = useRef<HTMLInputElement>(null);
 
-  // Agronomic Irrigation Calculator State
-  const [selectedWilaya, setSelectedWilaya] = useState(WILAYAS[0]);
-  const [selectedCrop, setSelectedCrop] = useState(SPECIMENS[0]);
-  const [ambientTemp, setAmbientTemp] = useState(24);
+  // Garden / Agronomic Calculator State
+  const [gardenWilayaIdx, setGardenWilayaIdx] = useState(0);
+  const [gardenCropIdx, setGardenCropIdx] = useState(3);
+  const [ambientTemp, setAmbientTemp] = useState(25);
   const [sunHours, setSunHours] = useState(8);
-  const [soilMoisture, setSoilMoisture] = useState(45);
+  const [soilMoisture, setSoilMoisture] = useState(40);
 
-  // Field Journal State
-  const [journalEntries, setJournalEntries] = useState([
-    {
-      id: "j1",
-      plant: "Thymus vulgaris L.",
-      location: "Djebel Ouarsenis (35.88°N, 1.95°E)",
-      date: "Aujourd'hui",
-      waterDays: 2,
-    },
-    {
-      id: "j2",
-      plant: "Rosmarinus officinalis L.",
-      location: "Col des Oliviers (36.42°N, 2.81°E)",
-      date: "Hier",
-      waterDays: 4,
-    },
-  ]);
-
-  // Digital Clock update
+  // Digital clock
   useEffect(() => {
     const updateTime = () => {
       const now = new Date();
-      const hours = String(now.getHours()).padStart(2, "0");
-      const minutes = String(now.getMinutes()).padStart(2, "0");
-      setCurrentTime(`${hours}:${minutes}`);
+      const h = String(now.getHours()).padStart(2, "0");
+      const m = String(now.getMinutes()).padStart(2, "0");
+      setCurrentTime(`${h}:${m}`);
     };
     updateTime();
-    const timer = setInterval(updateTime, 30000);
-    return () => clearInterval(timer);
+    const interval = setInterval(updateTime, 30000);
+    return () => clearInterval(interval);
   }, []);
 
-  // Filtered Plants in Catalog
-  const filteredPlants = SPECIMENS.filter((p) => {
-    const matchesSearch =
-      p.scientific.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      p.french.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      p.arabic.includes(searchQuery);
-    const matchesCategory = selectedCategory === "all" || p.category === selectedCategory;
-    return matchesSearch && matchesCategory;
+  // Filtered plants for search tab
+  const filteredTaxa = FLORA_DATABASE.filter((p) => {
+    const q = searchQuery.toLowerCase();
+    return (
+      p.scientific.toLowerCase().includes(q) ||
+      p.french.toLowerCase().includes(q) ||
+      p.arabic.includes(searchQuery) ||
+      p.family.toLowerCase().includes(q)
+    );
   });
 
-  // Calculate Precision Irrigation ($ET_c$)
-  // FAO-56 Penman-Monteith approximation formula
+  // Calculate Precision Irrigation
+  const currentWilaya = REGIONS_DATA[gardenWilayaIdx];
+  const currentCrop = FLORA_DATABASE[gardenCropIdx];
   const tempCorrection = (ambientTemp - 20) * 0.08;
   const solarFactor = (sunHours / 8) * 0.9;
-  const et0 = Math.max(1.8, Number((selectedWilaya.et0Base + tempCorrection + (solarFactor - 0.9)).toFixed(2)));
-  const etc = Number((et0 * selectedCrop.fao.kc).toFixed(2));
-  // Plant canopy area approximation (0.5 m²) converted to Litres/day
+  const et0 = Math.max(1.8, Number((currentWilaya.et0Base + tempCorrection + (solarFactor - 0.9)).toFixed(2)));
+  const etc = Number((et0 * currentCrop.fao.kc).toFixed(2));
   const waterNeedLiters = Number(((etc * 0.5 * (100 - soilMoisture)) / 50).toFixed(1));
 
-  // Run Simulated Scan
+  // Run AI Scanner Action
   const handleScanAction = () => {
     setIsScanning(true);
     setScanResult(null);
     setTimeout(() => {
       setIsScanning(false);
-      setScanResult(scannedSpecimen);
-    }, 1400);
+      setScanResult(selectedSpecimen);
+    }, 1300);
   };
 
-  // Upload Custom Specimen
-  const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+  // Upload Custom Photo
+  const handlePhotoUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
       const reader = new FileReader();
       reader.onload = (event) => {
-        setCustomImage(event.target?.result as string);
+        setCustomPhoto(event.target?.result as string);
         setIsScanning(true);
         setTimeout(() => {
           setIsScanning(false);
-          setScanResult(SPECIMENS[0]); // Best AI match
-        }, 1500);
+          setScanResult(FLORA_DATABASE[3]);
+        }, 1400);
       };
       reader.readAsDataURL(file);
     }
@@ -280,254 +247,387 @@ export default function InteractiveAppSimulator({ compact = false }: SimulatorPr
   const isRtl = simLang === "ar";
 
   return (
-    <div className={`app-simulator-wrapper ${compact ? "compact-mode" : ""}`}>
-      {/* Top Simulator Controls Toolbar */}
-      <div className="simulator-toolbar">
-        <div className="toolbar-left">
-          <span className="live-badge">
-            <span className="pulse-dot"></span>
-            LIVE IPHONE DEMO
+    <div className={styles.wrapper}>
+      {/* Simulator Top Controls */}
+      <div className={styles.toolbar}>
+        <div className={styles.toolbarLeft}>
+          <span className={styles.liveBadge}>
+            <span className={styles.liveDot}></span>
+            EXPO SDK 57 NATIVE
           </span>
-          <span className="device-tag">iPhone 16 Pro • Expo SDK 57</span>
+          <span className={styles.deviceTag}>iPhone 16 Pro</span>
         </div>
 
-        <div className="toolbar-right">
-          <div className="sim-lang-picker">
-            <Globe size={14} />
-            <button
-              className={`lang-chip ${simLang === "fr" ? "active" : ""}`}
-              onClick={() => setSimLang("fr")}
-            >
-              FR
-            </button>
-            <button
-              className={`lang-chip ${simLang === "ar" ? "active" : ""}`}
-              onClick={() => setSimLang("ar")}
-            >
-              عربي
-            </button>
-            <button
-              className={`lang-chip ${simLang === "en" ? "active" : ""}`}
-              onClick={() => setSimLang("en")}
-            >
-              EN
-            </button>
-          </div>
+        <div className={styles.langPicker}>
+          <Globe size={13} color="#64748B" />
+          <button
+            className={`${styles.langBtn} ${simLang === "en" ? styles.langBtnActive : ""}`}
+            onClick={() => setSimLang("en")}
+          >
+            EN
+          </button>
+          <button
+            className={`${styles.langBtn} ${simLang === "fr" ? styles.langBtnActive : ""}`}
+            onClick={() => setSimLang("fr")}
+          >
+            FR
+          </button>
+          <button
+            className={`${styles.langBtn} ${simLang === "ar" ? styles.langBtnActive : ""}`}
+            onClick={() => setSimLang("ar")}
+          >
+            عربي
+          </button>
         </div>
       </div>
 
-      {/* Realistic iPhone Chassis */}
-      <div className="iphone-chassis">
-        {/* Hardware Bezel & Glass Reflection */}
-        <div className="iphone-inner-frame">
-          {/* iOS Dynamic Island & Status Bar */}
-          <div className="ios-status-bar">
-            <span className="ios-time">{currentTime}</span>
-
-            {/* Dynamic Island */}
-            <div className="dynamic-island">
-              <span className="island-dot"></span>
-              <span className="island-text">
-                {isScanning ? "Analyse IA..." : "🌿 PhytoSense"}
-              </span>
+      {/* iPhone 16 Pro Chassis */}
+      <div className={styles.chassis}>
+        <div className={styles.innerFrame}>
+          {/* iOS Top Status Bar */}
+          <div className={styles.statusBar}>
+            <span className={styles.statusTime}>{currentTime}</span>
+            <div className={styles.dynamicIsland}>
+              <span className={styles.islandDot}></span>
+              <span>{isScanning ? "Scanning..." : "PhytoSense"}</span>
             </div>
-
-            <div className="ios-icons">
-              <span className="signal-bars">
-                <span></span>
-                <span></span>
-                <span></span>
-                <span></span>
-              </span>
-              <span className="wifi-icon">5G</span>
-              <span className="battery-pill">
-                <span className="battery-fill"></span>
-              </span>
+            <div className={styles.statusIcons}>
+              <span>5G</span>
+              <div className={styles.batteryPill}>
+                <div className={styles.batteryLevel}></div>
+              </div>
             </div>
           </div>
 
-          {/* Interactive Screen Viewport */}
-          <div className={`iphone-screen-content ${isRtl ? "sim-rtl" : ""}`}>
-            {/* TAB 1: HERBARIUM & CATALOG */}
-            {activeTab === "catalog" && (
-              <div className="sim-screen catalog-view">
-                <div className="sim-header">
-                  <div className="header-top">
-                    <div>
-                      <span className="header-tag">
+          {/* Native Expo Top Brand Header (Matches _layout.tsx) */}
+          <div className={styles.appHeader}>
+            <div className={styles.brandBlock}>
+              <div className={styles.brandIconSquare}>
+                <Leaf size={20} strokeWidth={2.5} />
+              </div>
+              <div>
+                <h1 className={styles.brandTitle}>PhytoSense</h1>
+                <p className={styles.brandTagline}>AI for a Greener Tomorrow</p>
+              </div>
+            </div>
+
+            <div className={styles.headerRight}>
+              <div
+                className={styles.headerPill}
+                onClick={() => setSimLang(simLang === "en" ? "fr" : simLang === "fr" ? "ar" : "en")}
+              >
+                <Globe size={13} color="#059669" />
+                <span>{simLang.toUpperCase()}</span>
+              </div>
+              <div className={styles.profileBtn}>
+                <User size={16} />
+              </div>
+            </div>
+          </div>
+
+          {/* Screen Content Body */}
+          <div className={`${styles.screenBody} ${isRtl ? styles.rtlLayout : ""}`}>
+            {/* ================================================================ */}
+            {/* TAB 1: HOME SCREEN (Exact Expo index.tsx Replica) */}
+            {/* ================================================================ */}
+            {activeTab === "home" && (
+              <div className={styles.homeContainer}>
+                {/* 1. Immersive Botanical Mountain Hero Card */}
+                <div className={styles.heroCard}>
+                  <div className={styles.heroGradient}></div>
+                  <div className={styles.heroContent}>
+                    {/* Badge Row */}
+                    <div className={styles.heroBadgesRow}>
+                      <div className={styles.brandEmblemPill}>
+                        <Leaf size={12} strokeWidth={2.5} />
+                        <span>PhytoSense</span>
+                      </div>
+                      <div className={styles.badgeOffline}>
+                        <ShieldCheck size={12} />
+                        <span>100% Offline SQLite</span>
+                      </div>
+                    </div>
+
+                    {/* Headline */}
+                    <div className={styles.heroHeadlineBlock}>
+                      <h2 className={styles.heroMainTitle}>
                         {simLang === "ar"
-                          ? "الفلورا الطبية للجزائر"
+                          ? "اكتشف كيمياء الطبيعة"
                           : simLang === "fr"
-                          ? "Flore Médicinale d'Algérie"
-                          : "Medicinal Algerian Flora"}
-                      </span>
-                      <h2 className="header-title">
-                        {simLang === "ar" ? "معشبة فيتوسنس" : "PhytoSense Herbier"}
+                          ? "Explorez la Chimie Botanique"
+                          : "Decode Nature's Chemistry"}
                       </h2>
+                      <p className={styles.heroSubtitle}>
+                        {simLang === "ar"
+                          ? "ذكاء اصطناعي نباتي • 155 نوعاً مستوطناً"
+                          : "AI Botanical Intelligence • 155 Curated Taxa"}
+                      </p>
                     </div>
-                    <div className="offline-pill">
-                      <ShieldCheck size={12} />
-                      <span>{simLang === "ar" ? "دون إنترنت" : "Hors-Ligne"}</span>
-                    </div>
-                  </div>
 
-                  {/* Search Bar */}
-                  <div className="sim-search-bar">
-                    <Search size={16} className="search-icon" />
-                    <input
-                      type="text"
-                      placeholder={
-                        simLang === "ar"
-                          ? "ابحث بالاسم العلمي، العربي أو الفرنسي..."
-                          : simLang === "fr"
-                          ? "Rechercher une plante, famille..."
-                          : "Search scientific or vernacular..."
-                      }
-                      value={searchQuery}
-                      onChange={(e) => setSearchQuery(e.target.value)}
-                    />
-                    {searchQuery && (
-                      <button onClick={() => setSearchQuery("")} className="clear-search">
-                        <X size={14} />
-                      </button>
-                    )}
-                  </div>
-
-                  {/* Categories Chips */}
-                  <div className="sim-chips-scroll">
-                    {[
-                      { id: "all", fr: "Toutes", ar: "الكل", en: "All" },
-                      { id: "respiratory", fr: "Respiratoire", ar: "تنفسي", en: "Respiratory" },
-                      { id: "digestion", fr: "Digestif", ar: "هضمي", en: "Digestive" },
-                      { id: "immunity", fr: "Immunité", ar: "مناعة", en: "Immunity" },
-                    ].map((cat) => (
+                    {/* Search Bar */}
+                    <div className={styles.heroSearchBar}>
+                      <Search size={16} color="#059669" />
+                      <input
+                        type="text"
+                        placeholder={
+                          simLang === "ar"
+                            ? "ابحث بالاسم العلمي، العربي أو الفرنسي..."
+                            : "Search Latin, French, or Arabic name..."
+                        }
+                        value={searchQuery}
+                        onChange={(e) => setSearchQuery(e.target.value)}
+                        onKeyDown={(e) => {
+                          if (e.key === "Enter") setActiveTab("search");
+                        }}
+                        className={styles.heroSearchInput}
+                      />
                       <button
-                        key={cat.id}
-                        className={`sim-chip ${selectedCategory === cat.id ? "active" : ""}`}
-                        onClick={() => setSelectedCategory(cat.id)}
+                        className={styles.heroSearchBtn}
+                        onClick={() => setActiveTab("search")}
                       >
-                        {cat[simLang]}
+                        <ArrowRight size={14} />
                       </button>
-                    ))}
+                    </div>
+
+                    {/* Popular Filters */}
+                    <div className={styles.popularRow}>
+                      <span className={styles.popularLabel}>
+                        {simLang === "ar" ? "الشائع:" : "Popular:"}
+                      </span>
+                      {QUICK_FILTERS.map((f, i) => (
+                        <button
+                          key={i}
+                          className={styles.popularChip}
+                          onClick={() => {
+                            setSearchQuery(f.query);
+                            setActiveTab("search");
+                          }}
+                        >
+                          <Leaf size={10} color="#059669" />
+                          <span>{f.label}</span>
+                        </button>
+                      ))}
+                    </div>
                   </div>
                 </div>
 
-                {/* Plant Cards List */}
-                <div className="sim-plants-list">
-                  {filteredPlants.map((plant) => (
-                    <div
-                      key={plant.id}
-                      className="sim-plant-card"
-                      onClick={() => setSelectedPlant(plant)}
-                    >
-                      <div className="plant-card-thumb">
-                        <Image
-                          src={plant.image}
-                          alt={plant.scientific}
-                          width={80}
-                          height={80}
-                          className="thumb-img"
-                        />
-                        <span className="card-grade-badge">{plant.grade}</span>
-                      </div>
-                      <div className="plant-card-info">
-                        <span className="card-family">{plant.family}</span>
-                        <h4 className="card-name">{plant.scientific}</h4>
-                        <p className="card-vernacular">
-                          {simLang === "ar" ? plant.arabic : plant.french}
-                        </p>
-                        <div className="card-molecule-pill">
-                          <Sparkles size={11} />
-                          <span>{plant.bioactive.split(",")[0]}</span>
-                        </div>
-                      </div>
-                      <ChevronRight size={18} className="card-chevron" />
+                {/* 2. Visual Statistics Cards (4 Columns) */}
+                <div className={styles.statsGrid}>
+                  <div className={styles.statCard} style={{ borderColor: "#D1FAE5" }}>
+                    <div className={styles.statIconBox} style={{ backgroundColor: "#ECFDF5", color: "#059669" }}>
+                      <Leaf size={14} />
                     </div>
-                  ))}
+                    <span className={styles.statValue} style={{ color: "#059669" }}>155</span>
+                    <span className={styles.statLabel}>Curated Taxa</span>
+                  </div>
+
+                  <div className={styles.statCard} style={{ borderColor: "#DBEAFE" }}>
+                    <div className={styles.statIconBox} style={{ backgroundColor: "#EFF6FF", color: "#2563EB" }}>
+                      <Layers size={14} />
+                    </div>
+                    <span className={styles.statValue} style={{ color: "#2563EB" }}>69</span>
+                    <span className={styles.statLabel}>Families</span>
+                  </div>
+
+                  <div className={styles.statCard} style={{ borderColor: "#FEF3C7" }}>
+                    <div className={styles.statIconBox} style={{ backgroundColor: "#FFFBEB", color: "#D97706" }}>
+                      <Zap size={14} />
+                    </div>
+                    <span className={styles.statValue} style={{ color: "#D97706" }}>FTS5</span>
+                    <span className={styles.statLabel}>Instant Search</span>
+                  </div>
+
+                  <div className={styles.statCard} style={{ borderColor: "#F3E8FF" }}>
+                    <div className={styles.statIconBox} style={{ backgroundColor: "#FAF5FF", color: "#7C3AED" }}>
+                      <Sprout size={14} />
+                    </div>
+                    <span className={styles.statValue} style={{ color: "#7C3AED" }}>FAO</span>
+                    <span className={styles.statLabel}>ECOCROP</span>
+                  </div>
+                </div>
+
+                {/* 3. Essential Modules Section (2x2 Grid) */}
+                <div className={styles.sectionTitleRow}>
+                  <h3 className={styles.sectionTitle}>Essential Modules</h3>
+                  <p className={styles.sectionSubtitle}>Select a tool to launch</p>
+                </div>
+
+                <div className={styles.actionGrid}>
+                  {/* Module 1: Scan & Identify */}
+                  <div
+                    className={styles.actionCard}
+                    style={{ borderColor: "#D1FAE5" }}
+                    onClick={() => setActiveTab("scan")}
+                  >
+                    <div className={styles.actionCardHeader}>
+                      <div className={styles.actionIconBox} style={{ backgroundColor: "#ECFDF5", color: "#059669" }}>
+                        <Camera size={18} />
+                      </div>
+                      <span className={styles.actionBadge} style={{ backgroundColor: "#ECFDF5", color: "#059669" }}>
+                        AI Vision
+                      </span>
+                    </div>
+                    <div>
+                      <h4 className={styles.actionTitle}>Scan & Identify</h4>
+                      <p className={styles.actionDesc}>Real-time leaf, flower & bark recognition</p>
+                    </div>
+                    <div className={styles.actionFooter} style={{ color: "#059669" }}>
+                      <span>Launch Camera</span>
+                      <ArrowRight size={12} />
+                    </div>
+                  </div>
+
+                  {/* Module 2: Botanical Catalog */}
+                  <div
+                    className={styles.actionCard}
+                    style={{ borderColor: "#DBEAFE" }}
+                    onClick={() => setActiveTab("search")}
+                  >
+                    <div className={styles.actionCardHeader}>
+                      <div className={styles.actionIconBox} style={{ backgroundColor: "#EFF6FF", color: "#2563EB" }}>
+                        <Search size={18} />
+                      </div>
+                      <span className={styles.actionBadge} style={{ backgroundColor: "#EFF6FF", color: "#2563EB" }}>
+                        FTS5 Index
+                      </span>
+                    </div>
+                    <div>
+                      <h4 className={styles.actionTitle}>Botanical Catalog</h4>
+                      <p className={styles.actionDesc}>Browse 155 endemic Algerian taxa</p>
+                    </div>
+                    <div className={styles.actionFooter} style={{ color: "#2563EB" }}>
+                      <span>Browse Flora</span>
+                      <ArrowRight size={12} />
+                    </div>
+                  </div>
+
+                  {/* Module 3: Precision Garden */}
+                  <div
+                    className={styles.actionCard}
+                    style={{ borderColor: "#FEF3C7" }}
+                    onClick={() => setActiveTab("garden")}
+                  >
+                    <div className={styles.actionCardHeader}>
+                      <div className={styles.actionIconBox} style={{ backgroundColor: "#FFFBEB", color: "#D97706" }}>
+                        <Droplets size={18} />
+                      </div>
+                      <span className={styles.actionBadge} style={{ backgroundColor: "#FFFBEB", color: "#D97706" }}>
+                        FAO-56
+                      </span>
+                    </div>
+                    <div>
+                      <h4 className={styles.actionTitle}>Precision Garden</h4>
+                      <p className={styles.actionDesc}>Daily evapotranspiration & irrigation</p>
+                    </div>
+                    <div className={styles.actionFooter} style={{ color: "#D97706" }}>
+                      <span>Calculate Water</span>
+                      <ArrowRight size={12} />
+                    </div>
+                  </div>
+
+                  {/* Module 4: Clinical Needs */}
+                  <div
+                    className={styles.actionCard}
+                    style={{ borderColor: "#F3E8FF" }}
+                    onClick={() => setActiveTab("recommend")}
+                  >
+                    <div className={styles.actionCardHeader}>
+                      <div className={styles.actionIconBox} style={{ backgroundColor: "#FAF5FF", color: "#7C3AED" }}>
+                        <Sparkles size={18} />
+                      </div>
+                      <span className={styles.actionBadge} style={{ backgroundColor: "#FAF5FF", color: "#7C3AED" }}>
+                        Clinical AI
+                      </span>
+                    </div>
+                    <div>
+                      <h4 className={styles.actionTitle}>Needs & Remedies</h4>
+                      <p className={styles.actionDesc}>Targeted symptom & ailment synergies</p>
+                    </div>
+                    <div className={styles.actionFooter} style={{ color: "#7C3AED" }}>
+                      <span>Explore Remedies</span>
+                      <ArrowRight size={12} />
+                    </div>
+                  </div>
+                </div>
+
+                {/* 4. Endemic Flora Spotlight */}
+                <div className={styles.sectionTitleRow}>
+                  <h3 className={styles.sectionTitle}>Endemic Flora Spotlight</h3>
+                  <p className={styles.sectionSubtitle}>Verified pharmacological monographs</p>
+                </div>
+
+                {FLORA_DATABASE.map((plant) => (
+                  <div
+                    key={plant.id}
+                    className={styles.spotlightCard}
+                    onClick={() => setSelectedPlant(plant)}
+                  >
+                    <div className={styles.spotlightThumb}>
+                      <Image src={plant.image} alt={plant.scientific} fill style={{ objectFit: "cover" }} />
+                    </div>
+                    <div className={styles.spotlightInfo}>
+                      <span className={styles.spotlightFamily}>{plant.family}</span>
+                      <h4 className={styles.spotlightName}>{plant.scientific}</h4>
+                      <p className={styles.spotlightVernacular}>
+                        {simLang === "ar" ? plant.arabic : plant.french}
+                      </p>
+                      <div className={styles.spotlightMoleculePill}>
+                        <Sparkles size={10} color="#059669" />
+                        <span>{plant.bioactive.split(",")[0]}</span>
+                      </div>
+                    </div>
+                    <ChevronRight size={16} color="#94A3B8" />
+                  </div>
+                ))}
+
+                {/* 5. Bioclimatic Agronomy Card */}
+                <div className={styles.sectionTitleRow}>
+                  <h3 className={styles.sectionTitle}>Bioclimatic Agronomy</h3>
+                  <p className={styles.sectionSubtitle}>Real-time FAO regional coefficients</p>
+                </div>
+
+                <div className={styles.regionCard}>
+                  <div className={styles.regionChips}>
+                    {REGIONS_DATA.map((reg, idx) => (
+                      <button
+                        key={idx}
+                        className={`${styles.regionChip} ${selectedRegionIdx === idx ? styles.regionChipActive : ""}`}
+                        onClick={() => setSelectedRegionIdx(idx)}
+                      >
+                        {reg.name}
+                      </button>
+                    ))}
+                  </div>
+
+                  <div className={styles.regionMetrics}>
+                    <div className={styles.regionMetricBox}>
+                      <span>ET₀ Penman</span>
+                      <strong>{REGIONS_DATA[selectedRegionIdx].et0}</strong>
+                    </div>
+                    <div className={styles.regionMetricBox}>
+                      <span>Irrigation</span>
+                      <strong>{REGIONS_DATA[selectedRegionIdx].irrigation}</strong>
+                    </div>
+                    <div className={styles.regionMetricBox}>
+                      <span>Soil pH</span>
+                      <strong>{REGIONS_DATA[selectedRegionIdx].soilPh}</strong>
+                    </div>
+                  </div>
                 </div>
               </div>
             )}
 
-            {/* TAB 2: AI BOTANICAL SCANNER */}
-            {activeTab === "scanner" && (
-              <div className="sim-screen scanner-view">
-                {/* Camera Viewfinder Header */}
-                <div className="scanner-hud-header">
-                  <div>
-                    <span className="hud-badge">IA VISION MULTIMODALE</span>
-                    <h3>{simLang === "ar" ? "ماسح النباتات الذكي" : "Scanner Botanique"}</h3>
-                  </div>
-                  <span className="hud-status">
-                    <span className="green-live"></span>
-                    {simLang === "ar" ? "مفعل" : "Capteur Actif"}
-                  </span>
-                </div>
-
-                {/* Live Viewfinder Frame */}
-                <div className="camera-viewfinder">
-                  <Image
-                    src={customImage || scannedSpecimen.image}
-                    alt="Current Specimen"
-                    fill
-                    className="viewfinder-specimen-img"
-                  />
-
-                  {/* Laser Scan Animation */}
-                  <div className={`scan-reticle ${isScanning ? "scanning-active" : ""}`}>
-                    <div className="corner corner-tl"></div>
-                    <div className="corner corner-tr"></div>
-                    <div className="corner corner-bl"></div>
-                    <div className="corner corner-br"></div>
-                    <div className="laser-sweep"></div>
-                    <div className="center-target">
-                      <Sparkles size={24} />
-                    </div>
-                  </div>
-
-                  {/* Specimen Presets Carousel */}
-                  <div className="viewfinder-presets">
-                    <span className="presets-label">
-                      {simLang === "ar" ? "اختر عينة تجريبية:" : "Spécimens Test:"}
-                    </span>
-                    <div className="presets-row">
-                      {SPECIMENS.map((s) => (
-                        <button
-                          key={s.id}
-                          className={`preset-btn ${scannedSpecimen.id === s.id && !customImage ? "active" : ""}`}
-                          onClick={() => {
-                            setCustomImage(null);
-                            setScannedSpecimen(s);
-                            setScanResult(null);
-                          }}
-                        >
-                          <Image src={s.image} alt={s.scientific} width={34} height={34} />
-                        </button>
-                      ))}
-                      {/* Upload Photo Button */}
-                      <button
-                        className="preset-btn upload-btn"
-                        onClick={() => fileInputRef.current?.click()}
-                        title="Importer une photo"
-                      >
-                        <Upload size={16} />
-                        <input
-                          type="file"
-                          ref={fileInputRef}
-                          style={{ display: "none" }}
-                          accept="image/*"
-                          onChange={handleFileUpload}
-                        />
-                      </button>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Organ Selector */}
-                <div className="organ-selector-row">
-                  {["Auto", "Feuille", "Fleur", "Fruit"].map((org) => (
+            {/* ================================================================ */}
+            {/* TAB 2: SCANNER (Exact Expo scan.tsx Replica) */}
+            {/* ================================================================ */}
+            {activeTab === "scan" && (
+              <div className={styles.scannerContainer}>
+                {/* Organ Selector Row */}
+                <div className={styles.organSelectorRow}>
+                  {["Auto", "Leaf", "Flower", "Fruit", "Bark"].map((org) => (
                     <button
                       key={org}
-                      className={`organ-btn ${selectedOrgan === org ? "active" : ""}`}
+                      className={`${styles.organBtn} ${selectedOrgan === org ? styles.organBtnActive : ""}`}
                       onClick={() => setSelectedOrgan(org)}
                     >
                       {org}
@@ -535,67 +635,112 @@ export default function InteractiveAppSimulator({ compact = false }: SimulatorPr
                   ))}
                 </div>
 
-                {/* Trigger Scan Button */}
+                {/* Camera Viewfinder */}
+                <div className={styles.viewfinderCard}>
+                  <Image
+                    src={customPhoto || selectedSpecimen.image}
+                    alt="Specimen"
+                    fill
+                    className={styles.viewfinderImg}
+                  />
+
+                  {/* Targeting Reticle */}
+                  <div className={styles.reticleOverlay}>
+                    <div className={`${styles.reticleCorner} ${styles.cornerTL}`}></div>
+                    <div className={`${styles.reticleCorner} ${styles.cornerTR}`}></div>
+                    <div className={`${styles.reticleCorner} ${styles.cornerBL}`}></div>
+                    <div className={`${styles.reticleCorner} ${styles.cornerBR}`}></div>
+                    {isScanning && <div className={styles.laserSweep}></div>}
+                  </div>
+
+                  {/* Preset Specimen Switcher */}
+                  <div className={styles.viewfinderPresetsBar}>
+                    {FLORA_DATABASE.map((s) => (
+                      <button
+                        key={s.id}
+                        className={`${styles.presetThumbBtn} ${selectedSpecimen.id === s.id && !customPhoto ? styles.presetThumbBtnActive : ""}`}
+                        onClick={() => {
+                          setCustomPhoto(null);
+                          setSelectedSpecimen(s);
+                          setScanResult(null);
+                        }}
+                      >
+                        <Image src={s.image} alt={s.scientific} width={38} height={38} style={{ objectFit: "cover" }} />
+                      </button>
+                    ))}
+                    <button
+                      className={styles.presetThumbBtn}
+                      style={{ background: "#059669", color: "#fff", display: "flex", alignItems: "center", justifyContent: "center" }}
+                      onClick={() => filePickerRef.current?.click()}
+                      title="Upload photo"
+                    >
+                      <Upload size={16} />
+                      <input
+                        type="file"
+                        ref={filePickerRef}
+                        style={{ display: "none" }}
+                        accept="image/*"
+                        onChange={handlePhotoUpload}
+                      />
+                    </button>
+                  </div>
+                </div>
+
+                {/* Primary Scan Button */}
                 <button
-                  className={`trigger-scan-btn ${isScanning ? "is-busy" : ""}`}
+                  className={styles.scanActionBtn}
                   onClick={handleScanAction}
                   disabled={isScanning}
                 >
                   {isScanning ? (
                     <>
-                      <RefreshCw size={18} className="spin-icon" />
-                      <span>
-                        {simLang === "ar" ? "جارِ التحليل البيوكيميائي..." : "Extraction des descripteurs IA..."}
-                      </span>
+                      <RefreshCw size={18} style={{ animation: "spin 1s linear infinite" }} />
+                      <span>Extracting Biochemical Features...</span>
                     </>
                   ) : (
                     <>
-                      <Camera size={20} />
-                      <span>
-                        {simLang === "ar" ? "التعرف على النبات الآن" : "Identifier le Spécimen"}
-                      </span>
+                      <Camera size={18} />
+                      <span>Identify Specimen</span>
                     </>
                   )}
                 </button>
 
-                {/* Scan Result Card */}
+                {/* Scan Result */}
                 {scanResult && !isScanning && (
-                  <div className="scan-result-card">
-                    <div className="result-header">
+                  <div className={styles.scanResultCard}>
+                    <div className={styles.scanResultHeader}>
                       <div>
-                        <span className="match-score">98.4% Match Pl@ntNet & Vision</span>
-                        <h4 className="result-species">{scanResult.scientific}</h4>
-                        <p className="result-common">
-                          {simLang === "ar" ? scanResult.arabic : scanResult.french}
+                        <span className={styles.confidenceBadge}>98.4% Match Pl@ntNet & Vision</span>
+                        <h4 style={{ fontSize: "1rem", fontWeight: 800, color: "#0F172A", margin: "4px 0 2px 0" }}>
+                          {scanResult.scientific}
+                        </h4>
+                        <p style={{ fontSize: "0.75rem", color: "#64748B", margin: 0 }}>
+                          {scanResult.french} • {scanResult.arabic}
                         </p>
                       </div>
-                      <span className="result-badge-verified">
-                        <CheckCircle2 size={16} />
-                      </span>
+                      <CheckCircle2 size={22} color="#059669" />
                     </div>
 
-                    <div className="diagnostic-trace">
-                      <div className="trace-item">
-                        <span className="trace-dot ok"></span>
-                        <span>Tier 1: Pl@ntNet API (98.4%)</span>
+                    <div className={styles.diagnosticTraceBox}>
+                      <div className={styles.traceRow}>
+                        <span className={styles.traceDot}></span>
+                        <span>Tier 1: Pl@ntNet Multi-Organ API (98.4%)</span>
                       </div>
-                      <div className="trace-item">
-                        <span className="trace-dot ok"></span>
-                        <span>Tier 2: Kindwise Vision (Confirmé)</span>
+                      <div className={styles.traceRow}>
+                        <span className={styles.traceDot}></span>
+                        <span>Tier 2: Kindwise Vision AI (Confirmed)</span>
                       </div>
-                      <div className="trace-item">
-                        <span className="trace-dot ok"></span>
-                        <span>Tier 3: Cache FTS5 Local (Synchronisé)</span>
+                      <div className={styles.traceRow}>
+                        <span className={styles.traceDot}></span>
+                        <span>Tier 3: SQLite FTS5 Herbarium (Synced)</span>
                       </div>
                     </div>
 
                     <button
-                      className="view-monograph-btn"
+                      className={styles.openMonographBtn}
                       onClick={() => setSelectedPlant(scanResult)}
                     >
-                      <span>
-                        {simLang === "ar" ? "فتح البطاقة الطبية الكاملة" : "Ouvrir la Monographie Clinique"}
-                      </span>
+                      <span>View Clinical Monograph</span>
                       <ArrowRight size={14} />
                     </button>
                   </div>
@@ -603,454 +748,365 @@ export default function InteractiveAppSimulator({ compact = false }: SimulatorPr
               </div>
             )}
 
-            {/* TAB 3: SMART GARDEN & IRRIGATION */}
+            {/* ================================================================ */}
+            {/* TAB 3: SEARCH / CATALOG (Exact Expo search.tsx Replica) */}
+            {/* ================================================================ */}
+            {activeTab === "search" && (
+              <div className={styles.searchContainer}>
+                <span className={styles.searchHeaderPill}>
+                  <ShieldCheck size={12} />
+                  Embedded SQLite FTS5 • 155 Taxa
+                </span>
+
+                <div className={styles.catalogSearchBar}>
+                  <Search size={18} color="#059669" />
+                  <input
+                    type="text"
+                    placeholder="Search scientific, French or Arabic name..."
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                    className={styles.catalogSearchInput}
+                  />
+                  {searchQuery && (
+                    <button
+                      onClick={() => setSearchQuery("")}
+                      style={{ background: "none", border: "none", cursor: "pointer", color: "#64748B" }}
+                    >
+                      <X size={16} />
+                    </button>
+                  )}
+                </div>
+
+                <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
+                  {filteredTaxa.map((plant) => (
+                    <div
+                      key={plant.id}
+                      className={styles.spotlightCard}
+                      onClick={() => setSelectedPlant(plant)}
+                    >
+                      <div className={styles.spotlightThumb}>
+                        <Image src={plant.image} alt={plant.scientific} fill style={{ objectFit: "cover" }} />
+                      </div>
+                      <div className={styles.spotlightInfo}>
+                        <span className={styles.spotlightFamily}>{plant.family}</span>
+                        <h4 className={styles.spotlightName}>{plant.scientific}</h4>
+                        <p className={styles.spotlightVernacular}>
+                          {simLang === "ar" ? plant.arabic : plant.french}
+                        </p>
+                        <div className={styles.spotlightMoleculePill}>
+                          <Sparkles size={10} color="#059669" />
+                          <span>{plant.bioactive.split(",")[0]}</span>
+                        </div>
+                      </div>
+                      <ChevronRight size={16} color="#94A3B8" />
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* ================================================================ */}
+            {/* TAB 4: NEEDS & REMEDIES (Exact Expo recommend.tsx Replica) */}
+            {/* ================================================================ */}
+            {activeTab === "recommend" && (
+              <div className={styles.remediesContainer}>
+                <div className={styles.sectionTitleRow}>
+                  <h3 className={styles.sectionTitle}>Botanical Recommendations</h3>
+                  <p className={styles.sectionSubtitle}>Targeted pharmacological synergies</p>
+                </div>
+
+                {AILMENTS_PRESETS.map((item) => {
+                  const matched = FLORA_DATABASE.find((p) => p.id === item.plantId)!;
+                  return (
+                    <div
+                      key={item.id}
+                      className={styles.ailmentCard}
+                      onClick={() => setSelectedPlant(matched)}
+                    >
+                      <div className={styles.ailmentCardHeader}>
+                        <span className={styles.ailmentIcon}>{item.icon}</span>
+                        <div style={{ flex: 1 }}>
+                          <h4 className={styles.ailmentCardTitle}>
+                            {simLang === "ar" ? item.labelAr : simLang === "fr" ? item.labelFr : item.label}
+                          </h4>
+                          <p className={styles.ailmentPlantMatch}>
+                            🌿 {matched.scientific} ({matched.french})
+                          </p>
+                        </div>
+                        <ChevronRight size={16} color="#94A3B8" />
+                      </div>
+                      <div className={styles.ailmentProtocolBox}>
+                        <strong>Protocol: </strong> {item.protocol}
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            )}
+
+            {/* ================================================================ */}
+            {/* TAB 5: GARDEN & IRRIGATION (Exact Expo garden.tsx Replica) */}
+            {/* ================================================================ */}
             {activeTab === "garden" && (
-              <div className="sim-screen garden-view">
-                <div className="sim-header">
-                  <span className="header-tag">CALCULATEUR AGRONOMIQUE FAO-56</span>
-                  <h2 className="header-title">
-                    {simLang === "ar" ? "الري الدقيق والطقس" : "Jardin & Irrigation"}
-                  </h2>
+              <div className={styles.gardenContainer}>
+                <div className={styles.sectionTitleRow}>
+                  <h3 className={styles.sectionTitle}>Precision Garden</h3>
+                  <p className={styles.sectionSubtitle}>FAO-56 Penman Evapotranspiration Calculator</p>
                 </div>
 
-                <div className="garden-content-scroll">
-                  {/* Location Selector */}
-                  <div className="agri-control-box">
-                    <div className="control-label">
-                      <MapPin size={15} />
-                      <span>{simLang === "ar" ? "الولاية / المنطقة:" : "Wilaya & Étage Bioclimatique:"}</span>
-                    </div>
-                    <select
-                      value={selectedWilaya.name}
-                      onChange={(e) => {
-                        const found = WILAYAS.find((w) => w.name === e.target.value);
-                        if (found) setSelectedWilaya(found);
-                      }}
-                      className="sim-select"
-                    >
-                      {WILAYAS.map((w) => (
-                        <option key={w.name} value={w.name}>
-                          {w.name} — {w.climate}
-                        </option>
-                      ))}
-                    </select>
-                  </div>
-
-                  {/* Crop Selector */}
-                  <div className="agri-control-box">
-                    <div className="control-label">
-                      <Leaf size={15} />
-                      <span>{simLang === "ar" ? "المحصول المستهدف:" : "Culture Cible (Kc):"}</span>
-                    </div>
-                    <select
-                      value={selectedCrop.id}
-                      onChange={(e) => {
-                        const found = SPECIMENS.find((s) => s.id === Number(e.target.value));
-                        if (found) setSelectedCrop(found);
-                      }}
-                      className="sim-select"
-                    >
-                      {SPECIMENS.map((s) => (
-                        <option key={s.id} value={s.id}>
-                          {s.scientific} ({s.french}) — Kc: {s.fao.kc}
-                        </option>
-                      ))}
-                    </select>
-                  </div>
-
-                  {/* Interactive Sliders */}
-                  <div className="slider-card">
-                    <div className="slider-row">
-                      <div className="slider-header">
-                        <span>
-                          <Thermometer size={14} /> Température: <strong>{ambientTemp}°C</strong>
-                        </span>
-                      </div>
-                      <input
-                        type="range"
-                        min="10"
-                        max="45"
-                        value={ambientTemp}
-                        onChange={(e) => setAmbientTemp(Number(e.target.value))}
-                        className="sim-range"
-                      />
-                    </div>
-
-                    <div className="slider-row">
-                      <div className="slider-header">
-                        <span>
-                          <Sun size={14} /> Ensoleillement: <strong>{sunHours} h/jour</strong>
-                        </span>
-                      </div>
-                      <input
-                        type="range"
-                        min="4"
-                        max="14"
-                        value={sunHours}
-                        onChange={(e) => setSunHours(Number(e.target.value))}
-                        className="sim-range"
-                      />
-                    </div>
-
-                    <div className="slider-row">
-                      <div className="slider-header">
-                        <span>
-                          <Droplets size={14} /> Humidité du Sol: <strong>{soilMoisture}%</strong>
-                        </span>
-                      </div>
-                      <input
-                        type="range"
-                        min="10"
-                        max="90"
-                        value={soilMoisture}
-                        onChange={(e) => setSoilMoisture(Number(e.target.value))}
-                        className="sim-range"
-                      />
-                    </div>
-                  </div>
-
-                  {/* Real-time Calculation Result */}
-                  <div className="irrigation-result-card">
-                    <div className="water-header">
-                      <div>
-                        <span className="water-tag">BESOIN EN EAU DU JOUR (ETc)</span>
-                        <div className="water-value">
-                          {waterNeedLiters} <small>L / plant / jour</small>
-                        </div>
-                      </div>
-                      <div className="water-icon-circle">
-                        <Droplets size={26} />
-                      </div>
-                    </div>
-
-                    <div className="agri-metrics-grid">
-                      <div className="metric-cell">
-                        <span>ET₀ Penman</span>
-                        <strong>{et0} mm/j</strong>
-                      </div>
-                      <div className="metric-cell">
-                        <span>Coeff. Kc</span>
-                        <strong>{selectedCrop.fao.kc}</strong>
-                      </div>
-                      <div className="metric-cell">
-                        <span>Statut Sol</span>
-                        <strong className={soilMoisture < 35 ? "status-alert" : "status-ok"}>
-                          {soilMoisture < 35 ? "Déficit" : "Optimal"}
-                        </strong>
-                      </div>
-                    </div>
-
-                    <div className="agri-advice-box">
-                      <Info size={14} />
-                      <p>
-                        {simLang === "ar"
-                          ? "يوصى بالري بالتنقيط في الصباح الباكر لتقليل التبخر السطحي."
-                          : "Privilégier le goutte-à-goutte à l'aube pour optimiser l'efficience hydrique."}
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            )}
-
-            {/* TAB 4: THERAPEUTIC REMEDIES & NEEDS */}
-            {activeTab === "remedies" && (
-              <div className="sim-screen remedies-view">
-                <div className="sim-header">
-                  <span className="header-tag">SYNERGIE & PHARMACOLOGIE</span>
-                  <h2 className="header-title">
-                    {simLang === "ar" ? "استشارة المعشبة" : "Besoins & Remèdes"}
-                  </h2>
-                </div>
-
-                <div className="remedies-content-scroll">
-                  <p className="remedies-sub">
-                    {simLang === "ar"
-                      ? "اختر العارض الصحي لعرض البروتوكول الطبيعي المناسب:"
-                      : "Sélectionnez votre symptôme pour découvrir la synergie botanique recommandée :"}
-                  </p>
-
-                  <div className="ailments-list">
-                    {AILMENTS.map((item) => {
-                      const matchedPlant = SPECIMENS.find((p) => p.id === item.plantId)!;
-                      return (
-                        <div
-                          key={item.id}
-                          className="ailment-card"
-                          onClick={() => setSelectedPlant(matchedPlant)}
-                        >
-                          <div className="ailment-header">
-                            <span className="ailment-icon">{item.icon}</span>
-                            <div className="ailment-text">
-                              <h4>
-                                {simLang === "ar"
-                                  ? item.labelAr
-                                  : simLang === "fr"
-                                  ? item.labelFr
-                                  : item.labelEn}
-                              </h4>
-                              <p className="matched-plant-label">
-                                🌿 {matchedPlant.scientific} ({matchedPlant.french})
-                              </p>
-                            </div>
-                            <ChevronRight size={16} />
-                          </div>
-                          <div className="ailment-protocol">
-                            <strong>Protocole: </strong>
-                            <span>{item.advice}</span>
-                          </div>
-                        </div>
-                      );
-                    })}
-                  </div>
-                </div>
-              </div>
-            )}
-
-            {/* TAB 5: JOURNAL & ABOUT */}
-            {activeTab === "info" && (
-              <div className="sim-screen info-view">
-                <div className="sim-header">
-                  <span className="header-tag">SYSTÈME & MONOGRAPHIER</span>
-                  <h2 className="header-title">
-                    {simLang === "ar" ? "دفتر الميدان والمعلومات" : "Journal & À Propos"}
-                  </h2>
-                </div>
-
-                <div className="info-content-scroll">
-                  {/* Field Journal Log */}
-                  <div className="journal-section">
-                    <div className="journal-header-row">
-                      <h4>{simLang === "ar" ? "عينات ميدانية مسجلة" : "Herbier de Terrain"}</h4>
-                      <span className="badge-count">{journalEntries.length}</span>
-                    </div>
-
-                    {journalEntries.map((entry) => (
-                      <div key={entry.id} className="journal-entry-card">
-                        <div className="entry-dot"></div>
-                        <div className="entry-info">
-                          <h5>{entry.plant}</h5>
-                          <span className="entry-loc">{entry.location}</span>
-                          <span className="entry-time">{entry.date}</span>
-                        </div>
-                        <div className="entry-water-badge">
-                          <Droplets size={12} />
-                          <span>Dans {entry.waterDays}j</span>
-                        </div>
-                      </div>
+                <div className={styles.agriCard}>
+                  <span className={styles.agriLabel}>Wilaya & Bioclimatic Zone</span>
+                  <select
+                    className={styles.agriSelect}
+                    value={gardenWilayaIdx}
+                    onChange={(e) => setGardenWilayaIdx(Number(e.target.value))}
+                  >
+                    {REGIONS_DATA.map((r, i) => (
+                      <option key={i} value={i}>
+                        {r.title} — {r.climate}
+                      </option>
                     ))}
+                  </select>
+
+                  <span className={styles.agriLabel} style={{ marginTop: "10px" }}>
+                    Target Crop (Kc)
+                  </span>
+                  <select
+                    className={styles.agriSelect}
+                    value={gardenCropIdx}
+                    onChange={(e) => setGardenCropIdx(Number(e.target.value))}
+                  >
+                    {FLORA_DATABASE.map((c, i) => (
+                      <option key={i} value={i}>
+                        {c.scientific} ({c.french}) — Kc: {c.fao.kc}
+                      </option>
+                    ))}
+                  </select>
+
+                  <div className={styles.sliderRow}>
+                    <div className={styles.sliderHeader}>
+                      <span>Ambient Temperature</span>
+                      <strong>{ambientTemp}°C</strong>
+                    </div>
+                    <input
+                      type="range"
+                      min="10"
+                      max="45"
+                      value={ambientTemp}
+                      onChange={(e) => setAmbientTemp(Number(e.target.value))}
+                      className={styles.sliderInput}
+                    />
                   </div>
 
-                  {/* Architecture & Thesis Credits */}
-                  <div className="academic-credits-card">
-                    <div className="credits-badge">PFE MASTER 2026</div>
-                    <h4>PhytoSense Autonomous Botanical Ecosystem</h4>
-                    <p className="author-line">
-                      Réalisé par <strong>Benkorich Abdenour</strong>
-                      <br />
-                      Faculté des Sciences Exactes & Informatique
-                      <br />
-                      Université Abdelhamid Ibn Badis de Mostaganem (UMAB)
-                    </p>
-
-                    <div className="tech-stack-chips">
-                      <span>Next.js 16</span>
-                      <span>Expo SDK 57</span>
-                      <span>FastAPI</span>
-                      <span>SQLite FTS5</span>
-                      <span>Offline First</span>
+                  <div className={styles.sliderRow}>
+                    <div className={styles.sliderHeader}>
+                      <span>Solar Radiation</span>
+                      <strong>{sunHours} h/day</strong>
                     </div>
+                    <input
+                      type="range"
+                      min="4"
+                      max="14"
+                      value={sunHours}
+                      onChange={(e) => setSunHours(Number(e.target.value))}
+                      className={styles.sliderInput}
+                    />
+                  </div>
 
-                    <a
-                      href="https://github.com/Ben-coderr/PhytoSense/releases/download/v2.0.0/PhytoSense-v2.0.0.apk"
-                      className="download-apk-sim-btn"
-                      download
-                    >
-                      <Smartphone size={16} />
-                      <span>Télécharger l'APK Android (v2.0.0)</span>
-                    </a>
+                  <div className={styles.sliderRow}>
+                    <div className={styles.sliderHeader}>
+                      <span>Soil Moisture</span>
+                      <strong>{soilMoisture}%</strong>
+                    </div>
+                    <input
+                      type="range"
+                      min="10"
+                      max="90"
+                      value={soilMoisture}
+                      onChange={(e) => setSoilMoisture(Number(e.target.value))}
+                      className={styles.sliderInput}
+                    />
+                  </div>
+                </div>
+
+                {/* Calculation Output */}
+                <div className={styles.waterResultCard}>
+                  <div>
+                    <span style={{ fontSize: "0.68rem", fontWeight: 800, color: "#059669", letterSpacing: "0.04em" }}>
+                      DAILY WATER REQUIREMENT (ETc)
+                    </span>
+                    <h2 className={styles.waterValueBig}>
+                      {waterNeedLiters} <small>L / plant / day</small>
+                    </h2>
+                  </div>
+
+                  <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "6px" }}>
+                    <div style={{ background: "#ffffff", padding: "6px", borderRadius: "10px", textAlign: "center", border: "1px solid #d1fae5" }}>
+                      <span style={{ fontSize: "0.6rem", color: "#64748B", display: "block" }}>ET₀ Penman</span>
+                      <strong style={{ fontSize: "0.8rem", color: "#0F172A" }}>{et0} mm/j</strong>
+                    </div>
+                    <div style={{ background: "#ffffff", padding: "6px", borderRadius: "10px", textAlign: "center", border: "1px solid #d1fae5" }}>
+                      <span style={{ fontSize: "0.6rem", color: "#64748B", display: "block" }}>Coeff. Kc</span>
+                      <strong style={{ fontSize: "0.8rem", color: "#0F172A" }}>{currentCrop.fao.kc}</strong>
+                    </div>
+                    <div style={{ background: "#ffffff", padding: "6px", borderRadius: "10px", textAlign: "center", border: "1px solid #d1fae5" }}>
+                      <span style={{ fontSize: "0.6rem", color: "#64748B", display: "block" }}>Hydration</span>
+                      <strong style={{ fontSize: "0.8rem", color: soilMoisture < 35 ? "#D97706" : "#059669" }}>
+                        {soilMoisture < 35 ? "Deficit" : "Optimal"}
+                      </strong>
+                    </div>
                   </div>
                 </div>
               </div>
             )}
           </div>
 
-          {/* Plant Detail Sheet Modal (Full Monograph) */}
+          {/* ================================================================ */}
+          {/* SLIDE-UP MONOGRAPH MODAL */}
+          {/* ================================================================ */}
           {selectedPlant && (
-            <div className="plant-dossier-overlay">
-              <div className="plant-dossier-sheet">
-                <button
-                  className="close-dossier-btn"
-                  onClick={() => setSelectedPlant(null)}
-                >
+            <div className={styles.modalOverlay}>
+              <div className={styles.modalSheet}>
+                <button className={styles.modalCloseBtn} onClick={() => setSelectedPlant(null)}>
                   <X size={18} />
                 </button>
 
-                <div className="dossier-scroll">
-                  <div className="dossier-hero">
-                    <Image
-                      src={selectedPlant.image}
-                      alt={selectedPlant.scientific}
-                      fill
-                      className="dossier-img"
-                    />
-                    <div className="dossier-hero-gradient"></div>
-                    <div className="dossier-hero-text">
-                      <span className="dossier-family">{selectedPlant.family}</span>
-                      <h3>{selectedPlant.scientific}</h3>
-                      <p>
-                        {selectedPlant.french} • {selectedPlant.arabic}
-                      </p>
-                    </div>
+                <div className={styles.modalScroll}>
+                  <div className={styles.modalHeroImg}>
+                    <Image src={selectedPlant.image} alt={selectedPlant.scientific} fill style={{ objectFit: "cover" }} />
                   </div>
 
-                  <div className="dossier-body">
-                    {/* Bioactive Compounds */}
-                    <div className="dossier-card">
-                      <div className="card-heading">
-                        <Sparkles size={16} className="icon-green" />
-                        <h4>Principes Actifs & Métabolites</h4>
-                      </div>
-                      <p className="card-text">{selectedPlant.bioactive}</p>
-                    </div>
+                  <div>
+                    <span style={{ fontSize: "0.65rem", fontWeight: 800, color: "#059669", textTransform: "uppercase" }}>
+                      {selectedPlant.family} • {selectedPlant.grade}
+                    </span>
+                    <h3 style={{ fontSize: "1.2rem", fontWeight: 900, color: "#0F172A", margin: "2px 0" }}>
+                      {selectedPlant.scientific}
+                    </h3>
+                    <p style={{ fontSize: "0.8rem", color: "#64748B", margin: 0 }}>
+                      {selectedPlant.french} • {selectedPlant.arabic}
+                    </p>
+                  </div>
 
-                    {/* Indications */}
-                    <div className="dossier-card">
-                      <div className="card-heading">
-                        <HeartPulse size={16} className="icon-emerald" />
-                        <h4>Indications Thérapeutiques</h4>
-                      </div>
-                      <p className="card-text">{selectedPlant.indication}</p>
+                  <div className={styles.monographCard}>
+                    <div className={styles.monographHeading}>
+                      <Sparkles size={16} color="#059669" />
+                      <span>Principes Actifs & Métabolites</span>
                     </div>
+                    <p className={styles.monographText}>{selectedPlant.bioactive}</p>
+                  </div>
 
-                    {/* Preparation & Dosage */}
-                    <div className="dossier-card">
-                      <div className="card-heading">
-                        <Droplets size={16} className="icon-blue" />
-                        <h4>Préparation Galénique & Posologie</h4>
-                      </div>
-                      <p className="card-text">
-                        <strong>Mode: </strong> {selectedPlant.preparation}
-                      </p>
-                      <p className="card-text" style={{ marginTop: "6px" }}>
-                        <strong>Dose journalière: </strong> {selectedPlant.dosage}
-                      </p>
+                  <div className={styles.monographCard}>
+                    <div className={styles.monographHeading}>
+                      <HeartPulse size={16} color="#0284C7" />
+                      <span>Indications Thérapeutiques</span>
                     </div>
+                    <p className={styles.monographText}>{selectedPlant.indication}</p>
+                  </div>
 
-                    {/* Warnings */}
-                    <div className="dossier-card warning-box">
-                      <div className="card-heading">
-                        <AlertTriangle size={16} className="icon-amber" />
-                        <h4>Contre-indications & Sécurité</h4>
-                      </div>
-                      <p className="card-text">{selectedPlant.contraindications}</p>
+                  <div className={styles.monographCard}>
+                    <div className={styles.monographHeading}>
+                      <Droplets size={16} color="#059669" />
+                      <span>Préparation Galénique & Posologie</span>
                     </div>
+                    <p className={styles.monographText}>
+                      <strong>Mode: </strong>{selectedPlant.preparation}
+                    </p>
+                    <p className={styles.monographText} style={{ marginTop: "4px" }}>
+                      <strong>Dose: </strong>{selectedPlant.dosage}
+                    </p>
+                  </div>
 
-                    {/* FAO Ecocrop */}
-                    <div className="dossier-card">
-                      <div className="card-heading">
-                        <Compass size={16} className="icon-purple" />
-                        <h4>Exigences Bioclimatiques FAO-ECOCROP</h4>
+                  <div className={styles.monographCard} style={{ backgroundColor: "#FFFBEB", borderColor: "#FEF3C7" }}>
+                    <div className={styles.monographHeading} style={{ color: "#D97706" }}>
+                      <AlertTriangle size={16} color="#D97706" />
+                      <span>Contre-indications & Précautions</span>
+                    </div>
+                    <p className={styles.monographText}>{selectedPlant.contraindications}</p>
+                  </div>
+
+                  <div className={styles.monographCard}>
+                    <div className={styles.monographHeading}>
+                      <Compass size={16} color="#7C3AED" />
+                      <span>Exigences Bioclimatiques FAO</span>
+                    </div>
+                    <div style={{ display: "grid", gridTemplateColumns: "1fr", gap: "4px" }}>
+                      <div style={{ display: "flex", justifyContent: "space-between", fontSize: "0.68rem" }}>
+                        <span style={{ color: "#64748B" }}>pH du sol:</span>
+                        <strong>{selectedPlant.fao.soilPh}</strong>
                       </div>
-                      <div className="fao-chips-grid">
-                        <div className="fao-chip">
-                          <span>pH Sol:</span>
-                          <strong>{selectedPlant.fao.soilPh}</strong>
-                        </div>
-                        <div className="fao-chip">
-                          <span>Pluviométrie:</span>
-                          <strong>{selectedPlant.fao.rainfall}</strong>
-                        </div>
-                        <div className="fao-chip">
-                          <span>Température:</span>
-                          <strong>{selectedPlant.fao.tempRange}</strong>
-                        </div>
+                      <div style={{ display: "flex", justifyContent: "space-between", fontSize: "0.68rem" }}>
+                        <span style={{ color: "#64748B" }}>Pluviométrie:</span>
+                        <strong>{selectedPlant.fao.rainfall}</strong>
+                      </div>
+                      <div style={{ display: "flex", justifyContent: "space-between", fontSize: "0.68rem" }}>
+                        <span style={{ color: "#64748B" }}>Température:</span>
+                        <strong>{selectedPlant.fao.tempRange}</strong>
                       </div>
                     </div>
-
-                    {/* Ethnobotany */}
-                    <div className="dossier-card">
-                      <div className="card-heading">
-                        <BookOpen size={16} className="icon-teal" />
-                        <h4>Usage Ethnobotanique Maghrébin</h4>
-                      </div>
-                      <p className="card-text">{selectedPlant.ethno}</p>
-                    </div>
-
-                    {/* Add to Journal Button */}
-                    <button
-                      className="add-journal-btn"
-                      onClick={() => {
-                        setJournalEntries((prev) => [
-                          {
-                            id: `j-${Date.now()}`,
-                            plant: selectedPlant.scientific,
-                            location: "Relevé GPS Manuel (36.75°N, 3.05°E)",
-                            date: "Aujourd'hui",
-                            waterDays: 3,
-                          },
-                          ...prev,
-                        ]);
-                        setSelectedPlant(null);
-                        setActiveTab("info");
-                      }}
-                    >
-                      <Check size={16} />
-                      <span>Ajouter à mon Herbier de Terrain</span>
-                    </button>
                   </div>
                 </div>
               </div>
             </div>
           )}
 
-          {/* Bottom iOS Navigation Bar (Tabs) */}
-          <div className="ios-tab-bar">
+          {/* ================================================================ */}
+          {/* FLOATING BOTTOM TAB BAR (Exact Expo _layout.tsx Replica) */}
+          {/* ================================================================ */}
+          <div className={styles.floatingTabBar}>
+            {/* Tab 1: Home */}
             <button
-              className={`tab-btn ${activeTab === "catalog" ? "active" : ""}`}
-              onClick={() => setActiveTab("catalog")}
+              className={`${styles.tabItem} ${activeTab === "home" ? styles.tabItemActive : ""}`}
+              onClick={() => setActiveTab("home")}
             >
-              <BookOpen size={20} />
-              <span>{simLang === "ar" ? "معشبة" : "Herbier"}</span>
+              <Leaf size={22} color={activeTab === "home" ? "#059669" : "#64748B"} />
+              <span className={styles.tabLabel}>{simLang === "ar" ? "الرئيسية" : "Home"}</span>
+              {activeTab === "home" && <div className={styles.tabDotActive}></div>}
             </button>
 
+            {/* Tab 2: Identify */}
             <button
-              className={`tab-btn ${activeTab === "scanner" ? "active" : ""}`}
-              onClick={() => setActiveTab("scanner")}
+              className={`${styles.tabItem} ${activeTab === "scan" ? styles.tabItemActive : ""}`}
+              onClick={() => setActiveTab("scan")}
             >
-              <Camera size={22} className="camera-tab-icon" />
-              <span>{simLang === "ar" ? "ماسح" : "Scanner"}</span>
+              <Camera size={22} color={activeTab === "scan" ? "#059669" : "#64748B"} />
+              <span className={styles.tabLabel}>{simLang === "ar" ? "التعرف" : "Identify"}</span>
+              {activeTab === "scan" && <div className={styles.tabDotActive}></div>}
             </button>
 
+            {/* Tab 3: Search */}
             <button
-              className={`tab-btn ${activeTab === "garden" ? "active" : ""}`}
+              className={`${styles.tabItem} ${activeTab === "search" ? styles.tabItemActive : ""}`}
+              onClick={() => setActiveTab("search")}
+            >
+              <Search size={22} color={activeTab === "search" ? "#059669" : "#64748B"} />
+              <span className={styles.tabLabel}>{simLang === "ar" ? "البحث" : "Search"}</span>
+              {activeTab === "search" && <div className={styles.tabDotActive}></div>}
+            </button>
+
+            {/* Tab 4: Needs */}
+            <button
+              className={`${styles.tabItem} ${activeTab === "recommend" ? styles.tabItemActive : ""}`}
+              onClick={() => setActiveTab("recommend")}
+            >
+              <Sparkles size={22} color={activeTab === "recommend" ? "#059669" : "#64748B"} />
+              <span className={styles.tabLabel}>{simLang === "ar" ? "العلاج" : "Needs"}</span>
+              {activeTab === "recommend" && <div className={styles.tabDotActive}></div>}
+            </button>
+
+            {/* Tab 5: Garden */}
+            <button
+              className={`${styles.tabItem} ${activeTab === "garden" ? styles.tabItemActive : ""}`}
               onClick={() => setActiveTab("garden")}
             >
-              <Droplets size={20} />
-              <span>{simLang === "ar" ? "الري" : "Irrigation"}</span>
-            </button>
-
-            <button
-              className={`tab-btn ${activeTab === "remedies" ? "active" : ""}`}
-              onClick={() => setActiveTab("remedies")}
-            >
-              <HeartPulse size={20} />
-              <span>{simLang === "ar" ? "علاج" : "Remèdes"}</span>
-            </button>
-
-            <button
-              className={`tab-btn ${activeTab === "info" ? "active" : ""}`}
-              onClick={() => setActiveTab("info")}
-            >
-              <Info size={20} />
-              <span>{simLang === "ar" ? "المزيد" : "Journal"}</span>
+              <Sprout size={22} color={activeTab === "garden" ? "#059669" : "#64748B"} />
+              <span className={styles.tabLabel}>{simLang === "ar" ? "الحديقة" : "Garden"}</span>
+              {activeTab === "garden" && <div className={styles.tabDotActive}></div>}
             </button>
           </div>
 
-          {/* iOS Bottom Home Bar */}
-          <div className="ios-home-indicator">
-            <div className="home-bar"></div>
-          </div>
+          {/* iOS Bottom Home Indicator */}
+          <div className={styles.homeIndicator}></div>
         </div>
       </div>
     </div>
