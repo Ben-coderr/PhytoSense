@@ -283,6 +283,12 @@ export default function InteractiveAppSimulator({ compact = false }: SimulatorPr
 
       {/* iPhone 16 Pro Chassis */}
       <div className={styles.chassis}>
+        {/* Physical Hardware Buttons */}
+        <div className={styles.sideBtnAction} title="Action Button"></div>
+        <div className={styles.sideBtnVolUp} title="Volume Up"></div>
+        <div className={styles.sideBtnVolDown} title="Volume Down"></div>
+        <div className={styles.sideBtnPower} title="Side Power Button"></div>
+
         <div className={styles.innerFrame}>
           {/* iOS Top Status Bar */}
           <div className={styles.statusBar}>
