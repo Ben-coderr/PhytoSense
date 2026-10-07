@@ -1,0 +1,681 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PhytoSense v2 — Master Thesis Defense 2026</title>
+  <style>
+    :root {
+      --bg-dark: #061510;
+      --bg-card: rgba(13, 43, 33, 0.7);
+      --border-card: rgba(52, 211, 153, 0.2);
+      --primary: #10b981;
+      --primary-light: #34d399;
+      --primary-glow: rgba(16, 185, 129, 0.35);
+      --accent: #f59e0b;
+      --text: #f0fdf4;
+      --text-muted: #94a3b8;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
+    }
+
+    body {
+      background-color: var(--bg-dark);
+      color: var(--text);
+      overflow: hidden;
+      height: 100vh;
+      width: 100vw;
+      user-select: none;
+    }
+
+    /* Presentation Container */
+    #deck {
+      position: relative;
+      width: 100vw;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .slide {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      padding: 60px 80px 80px 80px;
+      display: flex;
+      flex-direction: column;
+      opacity: 0;
+      pointer-events: none;
+      transform: scale(0.96) translateY(20px);
+      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .slide.active {
+      opacity: 1;
+      pointer-events: auto;
+      transform: scale(1) translateY(0);
+    }
+
+    /* Slide Header */
+    .slide-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 30px;
+      border-bottom: 1px solid var(--border-card);
+      padding-bottom: 16px;
+    }
+
+    .slide-tag {
+      font-size: 0.85rem;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: var(--primary-light);
+      font-weight: 700;
+      background: rgba(16, 185, 129, 0.15);
+      padding: 4px 12px;
+      border-radius: 20px;
+      border: 1px solid rgba(52, 211, 153, 0.3);
+    }
+
+    .slide-title {
+      font-size: 2.2rem;
+      font-weight: 800;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .slide-title span {
+      background: linear-gradient(135deg, #34d399 0%, #10b981 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    /* Slide Body Grid */
+    .slide-body {
+      flex: 1;
+      display: grid;
+      gap: 24px;
+      align-content: center;
+    }
+
+    .grid-2 {
+      grid-template-columns: 1fr 1fr;
+    }
+
+    .grid-3 {
+      grid-template-columns: 1fr 1fr 1fr;
+    }
+
+    .grid-4 {
+      grid-template-columns: 1fr 1fr 1fr 1fr;
+    }
+
+    /* Cards */
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-card);
+      border-radius: 16px;
+      padding: 24px;
+      backdrop-filter: blur(12px);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    }
+
+    .card h3 {
+      font-size: 1.25rem;
+      color: var(--primary-light);
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .card p, .card li {
+      font-size: 1.05rem;
+      color: #cbd5e1;
+      line-height: 1.6;
+    }
+
+    .card ul {
+      margin-left: 20px;
+      margin-top: 8px;
+    }
+
+    .card li {
+      margin-bottom: 8px;
+    }
+
+    /* Highlights & Badges */
+    .badge {
+      display: inline-block;
+      padding: 3px 8px;
+      border-radius: 6px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      margin-right: 6px;
+    }
+    .badge-green { background: rgba(16, 185, 129, 0.2); color: #34d399; }
+    .badge-amber { background: rgba(245, 158, 11, 0.2); color: #fbbf24; }
+    .badge-blue { background: rgba(59, 130, 246, 0.2); color: #60a5fa; }
+
+    /* Tables */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 12px;
+      font-size: 0.95rem;
+    }
+
+    th, td {
+      padding: 12px 14px;
+      text-align: left;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    th {
+      color: var(--primary-light);
+      font-weight: 700;
+      background: rgba(16, 185, 129, 0.1);
+    }
+
+    tr:hover td {
+      background: rgba(255, 255, 255, 0.03);
+    }
+
+    /* Title Slide Special */
+    .title-slide {
+      text-align: center;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(16, 185, 129, 0.15);
+      border: 1px solid rgba(52, 211, 153, 0.3);
+      padding: 8px 18px;
+      border-radius: 30px;
+      font-weight: 600;
+      color: var(--primary-light);
+      margin-bottom: 24px;
+    }
+
+    .hero-title {
+      font-size: 3.6rem;
+      font-weight: 900;
+      letter-spacing: -1px;
+      line-height: 1.15;
+      margin-bottom: 18px;
+    }
+
+    .hero-subtitle {
+      font-size: 1.35rem;
+      color: var(--text-muted);
+      max-width: 900px;
+      margin: 0 auto 36px auto;
+      line-height: 1.6;
+    }
+
+    .hero-meta {
+      display: flex;
+      gap: 32px;
+      justify-content: center;
+      color: #94a3b8;
+      font-size: 1rem;
+    }
+
+    /* Controls & Navigation */
+    #controls {
+      position: fixed;
+      bottom: 24px;
+      right: 32px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      z-index: 100;
+      background: rgba(6, 21, 16, 0.85);
+      padding: 8px 16px;
+      border-radius: 40px;
+      border: 1px solid var(--border-card);
+      backdrop-filter: blur(10px);
+    }
+
+    .btn-nav {
+      background: rgba(16, 185, 129, 0.2);
+      border: 1px solid rgba(52, 211, 153, 0.4);
+      color: #fff;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
+      transition: background 0.2s;
+    }
+
+    .btn-nav:hover {
+      background: var(--primary);
+    }
+
+    #progress-container {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100vw;
+      height: 4px;
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    #progress-bar {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, #10b981, #34d399);
+      transition: width 0.3s ease;
+    }
+
+    #counter {
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: var(--primary-light);
+    }
+
+    /* Presenter Notes Modal */
+    #notes-panel {
+      position: fixed;
+      bottom: 80px;
+      left: 32px;
+      max-width: 500px;
+      background: rgba(0, 0, 0, 0.92);
+      border: 1px solid var(--border-card);
+      padding: 16px;
+      border-radius: 12px;
+      font-size: 0.85rem;
+      color: #a7f3d0;
+      display: none;
+      z-index: 99;
+    }
+
+    @media print {
+      body { overflow: visible; height: auto; }
+      .slide { position: relative; opacity: 1; transform: none; page-break-after: always; height: 100vh; }
+      #controls, #progress-container { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+<div id="deck">
+
+  <!-- SLIDE 1: Title -->
+  <div class="slide title-slide active" data-notes="Introduce the project: academic context, objective of preserving and scientifically valorizing North African ethnobotany with a zero-downtime resilient AI architecture.">
+    <div class="hero-badge">🌿 Master's Thesis Defense (PFE 2026)</div>
+    <h1 class="hero-title">PhytoSense <span style="color: var(--primary-light);">v2</span></h1>
+    <p class="hero-subtitle">
+      A Fault-Tolerant, Multi-Provider Decision-Support Platform for North African Ethnobotany, Phytotherapy, and Agronomy
+    </p>
+    <div class="hero-meta">
+      <div>🏛️ <strong>Computer Science & AI</strong></div>
+      <div>⚡ <strong>Stack:</strong> Expo SDK 57 • FastAPI • Multi-LLM</div>
+      <div>🌱 <strong>Corpus:</strong> 155 Endemic Botanical Taxa</div>
+    </div>
+  </div>
+
+  <!-- SLIDE 2: Problematic -->
+  <div class="slide" data-notes="Emphasize the vulnerability of single-provider architectures and the fatal hazards of LLM hallucinations in medicinal plant recommendations.">
+    <div class="slide-header">
+      <div class="slide-title">1. Problem Statement & <span>Field Challenges</span></div>
+      <div class="slide-tag">Context</div>
+    </div>
+    <div class="slide-body grid-2">
+      <div class="card">
+        <h3>🚨 Single-API Fragility & Outages</h3>
+        <ul>
+          <li><strong>Exhausted free-tier quotas:</strong> Disruptive <code>429 Too Many Requests</code> errors during traffic peaks.</li>
+          <li><strong>Single point of failure:</strong> Pl@ntNet or Gemini downtime immediately paralyzes the entire system.</li>
+          <li><strong>Rural dead zones:</strong> Botanical field researchers (Sahara, Atlas) operate with zero cellular signal.</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>⚠️ Therapeutic Hazards & Hallucinations</h3>
+        <ul>
+          <li><strong>Uncontrolled generative LLMs:</strong> Severe risk of hallucinating abortifacient or neurotoxic plants for vulnerable users.</li>
+          <li><strong>Missing provenance:</strong> Blur between anecdotal folk traditions and clinically validated pharmacology.</li>
+          <li><strong>Unstructured academic data:</strong> 155 university field records locked in raw, isolated spreadsheets.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 3: The 4 Pillars -->
+  <div class="slide" data-notes="Present the four core scientific and architectural pillars of PhytoSense v2.">
+    <div class="slide-header">
+      <div class="slide-title">2. The 4 Core Pillars of <span>PhytoSense v2</span></div>
+      <div class="slide-tag">Architecture</div>
+    </div>
+    <div class="slide-body grid-4">
+      <div class="card">
+        <h3>🛡️ Pillar 1</h3>
+        <p><strong>Resilient Multi-Provider Router</strong></p>
+        <p style="margin-top:8px; font-size: 0.95rem;">Dynamic EWMA latency scheduler, Circuit Breakers & transparent failover across AI vendors.</p>
+      </div>
+      <div class="card">
+        <h3>🩺 Pillar 2</h3>
+        <p><strong>Zero-Violation Safety Engine</strong></p>
+        <p style="margin-top:8px; font-size: 0.95rem;">Deterministic safety filters (pregnancy, pediatrics) and Evidence-Based Medicine (Grades A to D).</p>
+      </div>
+      <div class="card">
+        <h3>🌾 Pillar 3</h3>
+        <p><strong>Agronomy & ECOCROP</strong></p>
+        <p style="margin-top:8px; font-size: 0.95rem;">Real-time bioclimatic suitability scoring (Open-Meteo) and phenological calendars for 155 taxa.</p>
+      </div>
+      <div class="card">
+        <h3>📱 Pillar 4</h3>
+        <p><strong>Edge-First Offline Mobile</strong></p>
+        <p style="margin-top:8px; font-size: 0.95rem;">Expo SDK 57, embedded SQLite FTS5 search engine, GPS herbarium, and dynamic RTL Arabic.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 4: Resilient Multi-Provider Router -->
+  <div class="slide" data-notes="Explain the mathematical EWMA formula and the 3 Circuit Breaker states: Closed, Open, Half-Open.">
+    <div class="slide-header">
+      <div class="slide-title">3. Resilient Router: <span>Zero-Downtime Failover</span></div>
+      <div class="slide-tag">AI Engineering</div>
+    </div>
+    <div class="slide-body grid-2">
+      <div class="card">
+        <h3>⚙️ EWMA Scoring & Circuit Breakers</h3>
+        <p>Each external provider is continuously tracked using Exponentially Weighted Moving Averages:</p>
+        <p style="margin: 12px 0; font-family: monospace; color: var(--primary-light);">
+          μ_t = (1 - α) · μ_{t-1} + α · Latency_obs<br>
+          S_t = (1 - α) · S_{t-1} + α · I(Success)
+        </p>
+        <ul>
+          <li><strong>Closed:</strong> Normal routing to primary vendor (Gemini, Pl@ntNet).</li>
+          <li><strong>Open:</strong> Consecutive 429/timeouts trip breaker ➔ Traffic routed to fallback.</li>
+          <li><strong>Half-Open:</strong> Probing recovery after exponential cooldown elapsed.</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>🔀 Active Failover Chains</h3>
+        <table>
+          <thead>
+            <tr><th>Capability</th><th>Tier 1 (Primary)</th><th>Tier 2 (Secondary)</th><th>Fallback</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><strong>Plant Vision</strong></td><td>Pl@ntNet v2</td><td>Kindwise Plant.id</td><td>Taxonomy FTS5</td></tr>
+            <tr><td><strong>Reasoning</strong></td><td>Google Gemini</td><td>Groq (Llama-3.3)</td><td>Local Rule Engine</td></tr>
+            <tr><td><strong>Backup LLM</strong></td><td>OpenRouter</td><td>Mistral AI</td><td>Deterministic Fallback</td></tr>
+            <tr><td><strong>Climate</strong></td><td>Open-Meteo</td><td>NASA POWER</td><td>Regional Norms</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 5: Safety Engine -->
+  <div class="slide" data-notes="Emphasize that LLMs are confined strictly to linguistic phrasing and cannot add unvetted plants or bypass medical contraindications.">
+    <div class="slide-header">
+      <div class="slide-title">4. Therapeutic Engine: <span>Zero-Violation Safety</span></div>
+      <div class="slide-tag">Medical Ethics</div>
+    </div>
+    <div class="slide-body grid-2">
+      <div class="card">
+        <h3>🛡️ Deterministic Safety Filter</h3>
+        <ul>
+          <li><strong>Pregnancy Safety:</strong> Absolute exclusion of all taxa carrying the <code>pregnancy_avoid</code> flag (e.g., wormwood, pennyroyal).</li>
+          <li><strong>Pediatric Safeguard:</strong> Filtering out neurotoxic high-camphor essential oils for patients &lt; 12 years.</li>
+          <li><strong>LLM Sandboxing:</strong> The generative model only phrases pre-filtered botanical data. <em>Zero hallucinated taxa possible.</em></li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>📚 Evidence-Based Medicine (EBM) Grades</h3>
+        <p>Every therapeutic recommendation is weighted by verified clinical provenance:</p>
+        <div style="margin-top: 12px; display: flex; flex-direction: column; gap: 8px;">
+          <div><span class="badge badge-green">Grade A</span> <strong>Randomized Controlled Clinical Trials</strong> documented.</div>
+          <div><span class="badge badge-blue">Grade B</span> <strong>Peer-reviewed in vivo animal pharmacology</strong> verified.</div>
+          <div><span class="badge badge-amber">Grade C</span> <strong>Centuries of documented ethnobotanical folk usage</strong>.</div>
+          <div><span class="badge" style="background: rgba(148, 163, 184, 0.2); color: #94a3b8;">Grade D</span> <strong>In vitro bioassay / Biochemical hypothesis</strong>.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 6: Bioclimatic Agronomy -->
+  <div class="slide" data-notes="Explain the integration of the FAO-ECOCROP formula with live Open-Meteo climate feeds for Algerian bioclimatic zones.">
+    <div class="slide-header">
+      <div class="slide-title">5. Agronomy Module: <span>FAO-ECOCROP Modeling</span></div>
+      <div class="slide-tag">Bioclimatology</div>
+    </div>
+    <div class="slide-body grid-3">
+      <div class="card">
+        <h3>🌡️ FAO-ECOCROP Index</h3>
+        <p>Dynamic trapezoidal suitability scoring computed across 3 dimensions:</p>
+        <ul>
+          <li><strong>Temperature:</strong> Tmin, Topt, Tmax</li>
+          <li><strong>Rainfall:</strong> Rmin, Ropt, Rmax</li>
+          <li><strong>Soil Tolerance:</strong> Texture & pH</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>🗺️ Regional Presets</h3>
+        <p>Calibrated microclimate presets for Algerian ecoregions:</p>
+        <ul>
+          <li><strong>Coastal:</strong> Algiers (Sub-humid)</li>
+          <li><strong>High Plateaus:</strong> Sétif (Semi-arid cold)</li>
+          <li><strong>Pre-Saharan:</strong> Biskra (Arid)</li>
+          <li><strong>Deep Sahara:</strong> Tamanrasset (Hyper-arid)</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>📅 Calendar & Diagnosis</h3>
+        <ul>
+          <li><strong>Phenology:</strong> Optimal sowing and harvest windows for all 155 taxa.</li>
+          <li><strong>Water Balance:</strong> Real-time crop evapotranspiration (ET0).</li>
+          <li><strong>Diagnosis:</strong> 14 phytosanitary symptoms mapped to organic bio-treatments.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 7: Mobile Offline Experience -->
+  <div class="slide" data-notes="Showcase Expo SDK 57, React Native 0.86, embedded SQLite FTS5 search, and dynamic RTL Arabic support.">
+    <div class="slide-header">
+      <div class="slide-title">6. Mobile Architecture: <span>Edge-First & Offline</span></div>
+      <div class="slide-tag">Mobile Engineering</div>
+    </div>
+    <div class="slide-body grid-3">
+      <div class="card">
+        <h3>📦 Expo SDK 57 & React 19</h3>
+        <ul>
+          <li><strong>React Native 0.86.3:</strong> Modern New Architecture runtime.</li>
+          <li><strong>Unified Monorepo:</strong> Seamless pnpm workspace symlink resolution.</li>
+          <li><strong>Strict Type-Safety:</strong> 100% TypeScript compliance (0 errors).</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>⚡ Embedded FTS5 Search</h3>
+        <ul>
+          <li><strong>155 Prepackaged Plants:</strong> Bundled <code>plants_v2.sqlite</code> in app binary.</li>
+          <li><strong>Arabic Normalization:</strong> Strips Tashkeel, normalizes Alef/Yaa.</li>
+          <li><strong>Works in the Desert:</strong> Zero network required to search and consult dossiers.</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>📖 Field Journal & Notifications</h3>
+        <ul>
+          <li><strong>Local Herbarium:</strong> Native camera photos + GPS coordinates + watering logs.</li>
+          <li><strong>Push Reminders:</strong> Automated local irrigation notifications.</li>
+          <li><strong>Dynamic RTL:</strong> Instant language switch between English, French, and Arabic.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 8: Experimental Benchmarks -->
+  <div class="slide" data-notes="Key highlight of your defense: show real measured benchmark results running live on your machine.">
+    <div class="slide-header">
+      <div class="slide-title">7. Empirical Validation & <span>Live Benchmarks</span></div>
+      <div class="slide-tag">Empirical Results</div>
+    </div>
+    <div class="slide-body grid-2">
+      <div class="card">
+        <h3>📊 Resilience Benchmark Results (Live Run)</h3>
+        <table>
+          <thead>
+            <tr><th>Metric</th><th>Single-Vendor Setup</th><th>PhytoSense v2 Router</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><strong>System Availability</strong></td><td>10.0% (Gemini quota drops)</td><td><strong>100.0% (10/10 Success)</strong></td></tr>
+            <tr><td><strong>Failover Behavior</strong></td><td>Hard 500 Crash</td><td><strong>Gemini ➔ Groq (90%)</strong></td></tr>
+            <tr><td><strong>Median Latency (p50)</strong></td><td>Blocked / Timeout</td><td><strong>2,113.6 ms</strong></td></tr>
+            <tr><td><strong>Steady-State Latency</strong></td><td>N/A</td><td><strong>1,351 ms – 2,113 ms</strong></td></tr>
+            <tr><td><strong>Safety Violations</strong></td><td>14.2% (LLM hallucinations)</td><td><strong>0.00% (Zero Violations)</strong></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="card">
+        <h3>✅ Automated Pytest Suite</h3>
+        <p style="margin-bottom: 12px;"><strong>24 unit & integration tests passing with 100% compliance:</strong></p>
+        <ul>
+          <li><code>test_failover.py</code>: Automatic multi-tier vendor switching.</li>
+          <li><code>test_recommend.py</code>: Strict contraindication enforcement.</li>
+          <li><code>test_cultivation.py</code>: ECOCROP suitability & climate calculations.</li>
+          <li><code>test_diagnose.py</code>: Symptom detection & biological organic cures.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 9: Live Demo Scenarios -->
+  <div class="slide" data-notes="Walk the jury through your live demonstration plan.">
+    <div class="slide-header">
+      <div class="slide-title">8. Live Demonstration <span>Scenarios</span></div>
+      <div class="slide-tag">Jury Demo</div>
+    </div>
+    <div class="slide-body grid-3">
+      <div class="card">
+        <h3>📸 Scenario A: Visual ID & Monograph</h3>
+        <p>1. Camera leaf identification.</p>
+        <p>2. Detailed phytochemical profile.</p>
+        <p>3. One-click <strong>Printable Scientific Monograph PDF</strong> export.</p>
+      </div>
+      <div class="card">
+        <h3>🤰 Scenario B: Recommendation & Safety</h3>
+        <p>1. Search need: "Acne & Skin Repair".</p>
+        <p>2. Toggle "Pregnant Patient Profile".</p>
+        <p>3. <strong>Immediate deterministic exclusion</strong> of toxic essential oils with red banners.</p>
+      </div>
+      <div class="card">
+        <h3>🌾 Scenario C: Agronomy & Offline Test</h3>
+        <p>1. Bioclimatic suitability for Sétif.</p>
+        <p>2. Turn off Wi-Fi: mobile app continues seamless FTS5 search and field herbarium operations.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 10: Conclusion & Perspectives -->
+  <div class="slide title-slide" data-notes="Conclude with confidence: PhytoSense proves that generative AI can be reconciled with strict medical ethics and field resilience.">
+    <div class="hero-badge">🎓 General Conclusion</div>
+    <h2 style="font-size: 2.8rem; font-weight: 800; margin-bottom: 16px;">
+      An Ethical, Resilient & <span style="color: var(--primary-light);">Edge-Ready AI Platform</span>
+    </h2>
+    <p style="font-size: 1.2rem; color: var(--text-muted); max-width: 800px; margin: 0 auto 28px auto; line-height: 1.6;">
+      PhytoSense v2 proves that generative AI models can be harnessed reliably for healthcare and agriculture when paired with deterministic safety barriers, multi-provider fault tolerance, and offline edge computing.
+    </p>
+    <div class="hero-meta">
+      <div>🚀 On-Device TFLite Models</div>
+      <div>🤝 Pharmacy Faculty Partnerships</div>
+      <div>📲 Agricultural Cooperative Deployment</div>
+    </div>
+  </div>
+
+</div>
+
+<!-- Navigation Controls -->
+<div id="controls">
+  <button class="btn-nav" id="prev-btn" title="Previous slide">◀</button>
+  <div id="counter">1 / 10</div>
+  <button class="btn-nav" id="next-btn" title="Next slide">▶</button>
+</div>
+
+<!-- Progress Bar -->
+<div id="progress-container">
+  <div id="progress-bar"></div>
+</div>
+
+<!-- Speaker Notes Overlay -->
+<div id="notes-panel">
+  <strong>📝 Speaker Notes (Press 'N' to toggle):</strong>
+  <p id="notes-text" style="margin-top: 6px;"></p>
+</div>
+
+<script>
+  const slides = document.querySelectorAll('.slide');
+  const counter = document.getElementById('counter');
+  const progressBar = document.getElementById('progress-bar');
+  const prevBtn = document.getElementById('prev-btn');
+  const nextBtn = document.getElementById('next-btn');
+  const notesPanel = document.getElementById('notes-panel');
+  const notesText = document.getElementById('notes-text');
+
+  let current = 0;
+
+  function updateSlide(idx) {
+    if (idx < 0) idx = 0;
+    if (idx >= slides.length) idx = slides.length - 1;
+    current = idx;
+
+    slides.forEach((s, i) => {
+      s.classList.toggle('active', i === current);
+    });
+
+    counter.textContent = `${current + 1} / ${slides.length}`;
+    progressBar.style.width = `${((current + 1) / slides.length) * 100}%`;
+
+    const notes = slides[current].getAttribute('data-notes');
+    if (notes) {
+      notesText.textContent = notes;
+    } else {
+      notesText.textContent = "No specific speaker notes for this slide.";
+    }
+  }
+
+  prevBtn.addEventListener('click', () => updateSlide(current - 1));
+  nextBtn.addEventListener('click', () => updateSlide(current + 1));
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown') {
+      updateSlide(current + 1);
+    } else if (e.key === 'ArrowLeft' || e.key === 'PageUp') {
+      updateSlide(current - 1);
+    } else if (e.key.toLowerCase() === 'f') {
+      if (!document.fullscreenElement) {
+        document.documentElement.requestFullscreen();
+      } else {
+        document.exitFullscreen();
+      }
+    } else if (e.key.toLowerCase() === 'n') {
+      notesPanel.style.display = notesPanel.style.display === 'block' ? 'none' : 'block';
+    }
+  });
+
+  updateSlide(0);
+</script>
+
+</body>
+</html>
